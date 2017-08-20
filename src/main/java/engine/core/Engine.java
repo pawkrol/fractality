@@ -28,7 +28,13 @@ class Engine {
         close();
     }
 
+    public RenderManager getRenderManager() {
+        return renderManager;
+    }
+
     private void init() {
+        renderManager.init();
+
         new Console();//.initInput(window);
     }
 
