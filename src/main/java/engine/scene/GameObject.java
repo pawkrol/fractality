@@ -5,6 +5,8 @@ public class GameObject extends Node {
     private Scene scene;
 
     public GameObject(Scene scene) {
+        this.type = Type.OBJECT;
+
         this.scene = scene;
     }
 

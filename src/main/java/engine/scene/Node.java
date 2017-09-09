@@ -5,6 +5,13 @@ import java.util.List;
 
 public abstract class Node {
 
+    public enum Type {
+        TRANSFORMATION,
+        OBJECT
+    }
+
+    protected Type type;
+
     private Node parent;
     private List<Node> children;
 
@@ -38,4 +45,7 @@ public abstract class Node {
         children.clear();
     }
 
+    public Type getType() {
+        return type;
+    }
 }

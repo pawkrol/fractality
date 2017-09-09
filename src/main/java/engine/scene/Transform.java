@@ -1,25 +1,37 @@
 package engine.scene;
 
-import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 public class Transform extends Node {
 
-    private AxisAngle4f rotation;
+    private Quaternionf rotation;
     private Vector3f translation;
     private Vector3f scale;
 
     public Transform() {
-        this.rotation = new AxisAngle4f(0, 0, 0, 0);
-        this.translation = new Vector3f(0, 0, 0);
+        this.type = Type.TRANSFORMATION;
+
+        this.rotation = new Quaternionf();
+        this.translation = new Vector3f();
         this.scale = new Vector3f(1, 1, 1);
     }
 
-    public AxisAngle4f getRotation() {
+    public void update() {
+
+    }
+
+    public void apply(Transform transform) {
+        rotation.add(transform.rotation);
+        translation.add(transform.translation);
+        scale.set(transform.scale);
+    }
+
+    public Quaternionf getRotation() {
         return rotation;
     }
 
-    public void setRotation(AxisAngle4f rotation) {
+    public void setRotation(Quaternionf rotation) {
         this.rotation = rotation;
     }
 

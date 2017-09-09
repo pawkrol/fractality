@@ -1,5 +1,8 @@
 package engine.render;
 
+import engine.scene.GameObject;
+import engine.scene.Transform;
+
 public class Renderer {
 
     private RenderConfig renderConfig;
@@ -8,7 +11,7 @@ public class Renderer {
         this.renderConfig = renderConfig;
     }
 
-    public void execute() {
+    public void render(Transform transform, GameObject gameObject) {
         renderConfig.enable();
 
         renderConfig.disable();
