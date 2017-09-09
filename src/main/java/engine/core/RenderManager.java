@@ -22,7 +22,7 @@ class RenderManager {
     }
 
     void update() {
-
+        updateScenegraph(scene.getScenegraph().getRoot());
     }
 
     void render() {
@@ -48,16 +48,23 @@ class RenderManager {
         this.renderer = renderer;
     }
 
-    private void renderScenegraph(Transform currentTransform, Node node) { //pre order traversal
+    private void updateScenegraph(Node node) {
         if (node == null) return;
 
         node.update();
+        for (Node child: node.getChildren()) {
+            updateScenegraph(child);
+        }
+    }
+
+    private void renderScenegraph(Transform currentTransform, Node node) { //pre order traversal
+        if (node == null) return;
 
         if (node.getType() == Node.Type.TRANSFORMATION) {
             if (currentTransform == null) {
                 currentTransform = (Transform) node;
             } else {
-               currentTransform.apply((Transform) node);
+                currentTransform.apply((Transform) node);
             }
         } else if (node.getType() == Node.Type.OBJECT) {
             renderer.render( currentTransform, (GameObject) node);
