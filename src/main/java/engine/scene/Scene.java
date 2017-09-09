@@ -2,13 +2,21 @@ package engine.scene;
 
 public class Scene {
 
-    private SceneGraph sceneGraph;
+    private Scenegraph scenegraph;
 
     public Scene() {
-        this.sceneGraph = new SceneGraph();
+        this.scenegraph = new Scenegraph();
     }
 
-    public SceneGraph getSceneGraph() {
-        return sceneGraph;
+    public void update() {
+        scenegraph.update();
+    }
+
+    public void render() {
+        scenegraph.render();
+    }
+
+    public Scenegraph getScenegraph() {
+        return scenegraph;
     }
 }

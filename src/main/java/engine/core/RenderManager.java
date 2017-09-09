@@ -6,25 +6,25 @@ class RenderManager {
 
     private Scene scene;
 
-    public void init() {
+    void init() {
         if (scene == null) {
             throw new NullPointerException("Scene not set");
         }
     }
 
-    public void update() {
-
+    void update() {
+        scene.update();
     }
 
-    public void render() {
-
+    void render() {
+        scene.render();
     }
 
-    public Scene getScene() {
+    Scene getScene() {
         return scene;
     }
 
-    public void setScene(Scene scene) {
+    void setScene(Scene scene) {
         this.scene = scene;
     }
 }

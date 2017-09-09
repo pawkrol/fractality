@@ -9,13 +9,12 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 
 public class Game implements MessageObserver{
 
-    private final MessageBus messageBus;
     private Engine engine;
 
     public Game() {
-        this.messageBus = MessageBus.getInstance();
         this.engine = new Engine();
 
+        MessageBus messageBus = MessageBus.getInstance();
         messageBus.attach(this);
     }
 
