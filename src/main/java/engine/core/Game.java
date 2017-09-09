@@ -3,6 +3,7 @@ package engine.core;
 import engine.message.Message;
 import engine.message.MessageBus;
 import engine.message.MessageObserver;
+import engine.render.Renderer;
 import engine.scene.Scene;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
@@ -32,6 +33,14 @@ public class Game implements MessageObserver{
 
     public void setScene(Scene scene) {
         engine.getRenderManager().setScene(scene);
+    }
+
+    public Renderer getRenderer() {
+        return engine.getRenderManager().getRenderer();
+    }
+
+    public void setRenderer(Renderer renderer) {
+        engine.getRenderManager().setRenderer(renderer);
     }
 
     @Override

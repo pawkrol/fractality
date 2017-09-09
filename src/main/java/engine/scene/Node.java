@@ -25,10 +25,8 @@ public abstract class Node {
         return parent;
     }
 
-    public Node setParent(Node parent) {
-        parent.addChildren(this);
+    public void setParent(Node parent) {
         this.parent = parent;
-        return parent;
     }
 
     public Node addChildren(Node node) {
