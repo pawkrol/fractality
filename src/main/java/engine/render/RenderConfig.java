@@ -1,4 +1,4 @@
-package engine.component;
+package engine.render;
 
 public interface RenderConfig {
     void enable();

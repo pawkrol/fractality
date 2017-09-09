@@ -8,34 +8,26 @@ public abstract class Node {
     private Node parent;
     private List<Node> children;
 
-    public Node() {
+    protected Node() {
         children = new ArrayList<>();
     }
 
-    public void update() {
-        for (Node n: children) {
-            n.update();
-        }
-    }
-
-    public void render() {
-        for (Node n: children) {
-            n.render();
-        }
-    }
+    public void update() {}
 
     public Node getParent() {
         return parent;
     }
 
-    public void setParent(Node parent) {
+    public Node setParent(Node parent) {
         parent.addChildren(this);
         this.parent = parent;
+        return parent;
     }
 
-    public void addChildren(Node node) {
+    public Node addChildren(Node node) {
         node.setParent(this);
         children.add(node);
+        return node;
     }
 
     public List<Node> getChildren() {

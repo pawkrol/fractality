@@ -1,23 +1,29 @@
 package engine.core;
 
+import engine.render.Renderer;
 import engine.scene.Scene;
 
 class RenderManager {
 
     private Scene scene;
+    private Renderer renderer;
 
     void init() {
         if (scene == null) {
             throw new NullPointerException("Scene not set");
         }
+
+        if (renderer == null) {
+            throw new NullPointerException("Renderer not set");
+        }
     }
 
     void update() {
-        scene.update();
+
     }
 
     void render() {
-        scene.render();
+
     }
 
     Scene getScene() {
@@ -26,5 +32,13 @@ class RenderManager {
 
     void setScene(Scene scene) {
         this.scene = scene;
+    }
+
+    public Renderer getRenderer() {
+        return renderer;
+    }
+
+    public void setRenderer(Renderer renderer) {
+        this.renderer = renderer;
     }
 }

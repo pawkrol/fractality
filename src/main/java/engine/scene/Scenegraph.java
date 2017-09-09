@@ -4,14 +4,6 @@ public class Scenegraph {
 
     private Node root;
 
-    public void update() {
-        root.update();
-    }
-
-    public void render() {
-        root.render();
-    }
-
     public Node getRoot() {
         return root;
     }

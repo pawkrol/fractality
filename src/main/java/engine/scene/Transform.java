@@ -1,17 +1,15 @@
-package engine.component;
+package engine.scene;
 
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
-public class Transform extends Component{
+public class Transform extends Node {
 
     private AxisAngle4f rotation;
     private Vector3f translation;
     private Vector3f scale;
 
     public Transform() {
-        this.setType(Type.TRANSFORM);
-
         this.rotation = new AxisAngle4f(0, 0, 0, 0);
         this.translation = new Vector3f(0, 0, 0);
         this.scale = new Vector3f(1, 1, 1);

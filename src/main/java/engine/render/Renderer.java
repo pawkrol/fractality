@@ -1,6 +1,6 @@
-package engine.component;
+package engine.render;
 
-public class Renderer extends Component {
+public class Renderer {
 
     private RenderConfig renderConfig;
 
@@ -8,12 +8,10 @@ public class Renderer extends Component {
         this.renderConfig = renderConfig;
     }
 
-    @Override
     public void execute() {
         renderConfig.enable();
 
-
-
         renderConfig.disable();
     }
+
 }

@@ -1,10 +1,9 @@
 package app;
 
-import engine.component.Component;
-import engine.component.Transform;
 import engine.core.Game;
 import engine.scene.GameObject;
 import engine.scene.Scene;
+import engine.scene.Transform;
 
 public class TestApp {
 
@@ -14,9 +13,9 @@ public class TestApp {
 
         Scene scene = new Scene();
         GameObject gameObject = new GameObject(scene);
-        gameObject.addComponent(Component.Type.TRANSFORM, new Transform());
 
-        scene.getScenegraph().setRoot(gameObject);
+        scene.getScenegraph().setRoot(new Transform());
+        scene.getScenegraph().getRoot().addChildren(gameObject);
 
         game.setScene(scene);
         game.start();
