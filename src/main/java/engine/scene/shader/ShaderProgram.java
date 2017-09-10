@@ -1,4 +1,4 @@
-package engine.render.shader;
+package engine.scene.shader;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -51,4 +51,7 @@ public class ShaderProgram {
         }
     }
 
+    public int getId() {
+        return id;
+    }
 }

@@ -1,32 +1,32 @@
 package engine.utils;
 
 import engine.core.Window;
-import engine.message.Message;
-import engine.message.MessageBus;
-import engine.message.MessageObserver;
+import engine.event.Event;
+import engine.event.EventBus;
+import engine.event.EventObserver;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Console implements MessageObserver{
+public class Console implements EventObserver {
 
-    private final MessageBus messageBus;
+    private final EventBus eventBus;
     private final Scanner scanner;
     private Map<Integer, String> messagesNames;
     private Map<String, Integer> commands;
 
     public Console() {
-        this.messageBus = MessageBus.getInstance();
+        this.eventBus = EventBus.getInstance();
         this.scanner = new Scanner(System.in);
         this.initMessagesNames();
         this.initCommands();
 
-        messageBus.attach(this);
+        eventBus.attach(this);
     }
 
     @Override
-    public void receiveMessage(int message, Object... params) {
+    public void receiveEvent(int message, Object... params) {
         StringBuilder log = new StringBuilder();
 
         log.append(messagesNames.get(message));
@@ -47,11 +47,11 @@ public class Console implements MessageObserver{
                 int message = commands.get(values[0]);
                 Object[] params = null;
 
-                if (message == Message.KEY_PRESSED || message == Message.KEY_RELEASED) {
+                if (message == Event.KEY_PRESSED || message == Event.KEY_RELEASED) {
                     params = new Object[]{Integer.parseInt(values[1])};
                 }
 
-                messageBus.propagate(message, params);
+                eventBus.propagate(message, params);
 
                 try {
                     Thread.sleep(100);
@@ -65,17 +65,17 @@ public class Console implements MessageObserver{
     private void initMessagesNames() {
         messagesNames = new HashMap<>();
 
-        messagesNames.put(Message.KEY_PRESSED, "Key pressed, value =");
-        messagesNames.put(Message.KEY_RELEASED, "Key released, value =");
-        messagesNames.put(Message.CURSOR_MOVED, "Cursor moved to pos(x, y) =");
-        messagesNames.put(Message.MOUSE_BUTTON_PRESSED, "Mouse button pressed, value =");
-        messagesNames.put(Message.MOUSE_BUTTON_RELEASED, "Mouse button released, value =");
+        messagesNames.put(Event.KEY_PRESSED, "Key pressed, value =");
+        messagesNames.put(Event.KEY_RELEASED, "Key released, value =");
+        messagesNames.put(Event.CURSOR_MOVED, "Cursor moved to pos(x, y) =");
+        messagesNames.put(Event.MOUSE_BUTTON_PRESSED, "Mouse button pressed, value =");
+        messagesNames.put(Event.MOUSE_BUTTON_RELEASED, "Mouse button released, value =");
     }
 
     private void initCommands() {
         commands = new HashMap<>();
 
-        commands.put("press", Message.KEY_PRESSED);
-        commands.put("release", Message.KEY_RELEASED);
+        commands.put("press", Event.KEY_PRESSED);
+        commands.put("release", Event.KEY_RELEASED);
     }
 }

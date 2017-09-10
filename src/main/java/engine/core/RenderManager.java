@@ -62,16 +62,16 @@ class RenderManager {
 
         if (node.getType() == Node.Type.TRANSFORMATION) {
             if (currentTransform == null) {
-                currentTransform = (Transform) node;
+                currentTransform = new Transform((Transform) node);
             } else {
                 currentTransform.apply((Transform) node);
             }
         } else if (node.getType() == Node.Type.OBJECT) {
-            renderer.render( currentTransform, (GameObject) node);
+            renderer.render(currentTransform, (GameObject) node);
         }
 
         for (Node child: node.getChildren()) {
-            renderScenegraph(currentTransform, child);
+            renderScenegraph(new Transform(currentTransform), child);
         }
     }
 }

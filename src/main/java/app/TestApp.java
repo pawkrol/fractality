@@ -6,6 +6,7 @@ import engine.render.Renderer;
 import engine.scene.GameObject;
 import engine.scene.Scene;
 import engine.scene.Transform;
+import engine.scene.shader.ShaderProgram;
 
 public class TestApp {
 
@@ -26,7 +27,14 @@ public class TestApp {
             }
         });
 
-        GameObject gameObject = new GameObject(scene);
+        ShaderProgram shaderProgram = null;
+        try {
+            shaderProgram = new ShaderProgram();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameObject gameObject = new GameObject(scene, shaderProgram);
 
         scene.getScenegraph().setRoot(new Transform());
         scene.getScenegraph().getRoot().addChildren(gameObject);

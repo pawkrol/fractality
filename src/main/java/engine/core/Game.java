@@ -1,22 +1,22 @@
 package engine.core;
 
-import engine.message.Message;
-import engine.message.MessageBus;
-import engine.message.MessageObserver;
+import engine.event.Event;
+import engine.event.EventBus;
+import engine.event.EventObserver;
 import engine.render.Renderer;
 import engine.scene.Scene;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 
-public class Game implements MessageObserver{
+public class Game implements EventObserver {
 
     private Engine engine;
 
     public Game() {
         this.engine = new Engine();
 
-        MessageBus messageBus = MessageBus.getInstance();
-        messageBus.attach(this);
+        EventBus eventBus = EventBus.getInstance();
+        eventBus.attach(this);
     }
 
     public void createWindow(int width, int height, String title, boolean resizable) {
@@ -44,8 +44,8 @@ public class Game implements MessageObserver{
     }
 
     @Override
-    public void receiveMessage(int message, Object... params) {
-        if (message == Message.KEY_RELEASED) {
+    public void receiveEvent(int message, Object... params) {
+        if (message == Event.KEY_RELEASED) {
             if ( (int) params[0] == GLFW_KEY_ESCAPE) {
                 engine.closeWindow();
             }

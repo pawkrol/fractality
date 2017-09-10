@@ -1,7 +1,7 @@
 package engine.input;
 
-import engine.message.Message;
-import engine.message.MessageBus;
+import engine.event.Event;
+import engine.event.EventBus;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -11,16 +11,16 @@ public class MouseClickInput implements GLFWMouseButtonCallbackI{
 
     private static MouseClickInput instance;
 
-    private final MessageBus messageBus = MessageBus.getInstance();
+    private final EventBus eventBus = EventBus.getInstance();
 
     private MouseClickInput() {}
 
     @Override
     public void invoke(long window, int button, int action, int mods) {
         if (action == GLFW_PRESS) {
-            messageBus.propagate(Message.MOUSE_BUTTON_PRESSED, button);
+            eventBus.propagate(Event.MOUSE_BUTTON_PRESSED, button);
         } else if (action == GLFW_RELEASE) {
-            messageBus.propagate(Message.MOUSE_BUTTON_RELEASED, button);
+            eventBus.propagate(Event.MOUSE_BUTTON_RELEASED, button);
         }
     }
 

@@ -1,7 +1,7 @@
 package engine.input;
 
-import engine.message.Message;
-import engine.message.MessageBus;
+import engine.event.Event;
+import engine.event.EventBus;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -10,16 +10,16 @@ public class KeyboardInput implements GLFWKeyCallbackI {
 
     private static KeyboardInput instance;
 
-    private final MessageBus messageBus = MessageBus.getInstance();
+    private final EventBus eventBus = EventBus.getInstance();
 
     private KeyboardInput() {}
 
     @Override
     public void invoke(long window, int key, int scancode, int action, int mods) {
         if (action == GLFW_PRESS){
-            messageBus.propagate(Message.KEY_PRESSED, key);
+            eventBus.propagate(Event.KEY_PRESSED, key);
         } else if (action == GLFW_RELEASE){
-            messageBus.propagate(Message.KEY_RELEASED, key);
+            eventBus.propagate(Event.KEY_RELEASED, key);
         }
     }
 

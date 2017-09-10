@@ -17,6 +17,14 @@ public class Transform extends Node {
         this.scale = new Vector3f(1, 1, 1);
     }
 
+    public Transform(Transform transform) {
+        this.type = Type.TRANSFORMATION;
+
+        this.rotation = new Quaternionf(transform.rotation);
+        this.translation = new Vector3f(transform.translation);
+        this.scale = new Vector3f(transform.scale);
+    }
+
     public void update() {
 
     }
@@ -24,6 +32,12 @@ public class Transform extends Node {
     public void apply(Transform transform) {
         rotation.add(transform.rotation);
         translation.add(transform.translation);
+        scale.set(transform.scale);
+    }
+
+    public void set(Transform transform) {
+        rotation.set(transform.rotation);
+        translation.set(transform.translation);
         scale.set(transform.scale);
     }
 

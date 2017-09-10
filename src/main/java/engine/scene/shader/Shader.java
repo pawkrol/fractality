@@ -1,4 +1,4 @@
-package engine.render.shader;
+package engine.scene.shader;
 
 import engine.utils.PathObtainer;
 
