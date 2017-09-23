@@ -35,7 +35,7 @@ class Engine {
     private void init() {
         renderManager.init();
 
-        new Console();//.initInput(window);
+//        new Console();//.initInput(window);
     }
 
     private void loop() {

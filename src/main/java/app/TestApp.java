@@ -1,7 +1,7 @@
 package app;
 
 import engine.core.Game;
-import engine.render.RenderConfig;
+import engine.render.DefaultRenderConfig;
 import engine.render.Renderer;
 import engine.scene.GameObject;
 import engine.scene.Scene;
@@ -15,17 +15,7 @@ public class TestApp {
         game.createWindow(1200, 800, "fractality", false);
 
         Scene scene = new Scene();
-        Renderer renderer = new Renderer(new RenderConfig() {
-            @Override
-            public void enable() {
-
-            }
-
-            @Override
-            public void disable() {
-
-            }
-        });
+        Renderer renderer = new Renderer(new DefaultRenderConfig());
 
         ShaderProgram shaderProgram = null;
         try {
@@ -37,7 +27,7 @@ public class TestApp {
             e.printStackTrace();
         }
 
-        GameObject gameObject = new GameObject(scene, null, shaderProgram);
+        GameObject gameObject = new Triangle(scene, shaderProgram);
 
         scene.getScenegraph().setRoot(new Transform());
         scene.getScenegraph().getRoot().addChildren(gameObject);

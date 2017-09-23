@@ -55,4 +55,12 @@ public class Vertex {
     public void setNormal(Vector3f normal) {
         this.normal = normal;
     }
+
+    public float[] getAsFloatArray() {
+        return new float[]{
+                position.x, position.y, position.z,
+                textureCoord.x, textureCoord.y,
+                normal.x, normal.y, normal.z
+        };
+    }
 }

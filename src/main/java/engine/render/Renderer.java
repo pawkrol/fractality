@@ -4,9 +4,6 @@ import engine.scene.GameObject;
 import engine.scene.Transform;
 import engine.scene.shader.ShaderProgram;
 
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
-
 public class Renderer {
 
     private RenderConfig renderConfig;
@@ -20,10 +17,9 @@ public class Renderer {
         renderConfig.enable();
 
         bindShaderProgram(gameObject.getShaderProgram());
-//        gameObject.getModel()
-//                .getMesh()
-//                .draw();
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        gameObject.getModel()
+                .getMesh()
+                .draw();
 
         renderConfig.disable();
     }
