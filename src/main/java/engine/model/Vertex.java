@@ -3,7 +3,20 @@ package engine.model;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+
 public class Vertex {
+
+    public static final int POSITION_SIZE = 3;
+    public static final int TEXTURE_COORD_SIZE = 2;
+    public static final int NORMAL_SIZE = 3;
+
+    public static final int POSITION_RELATIVE_OFFSET = 0;
+    public static final int TEXTURE_RELATIVE_COORD_OFFSET = POSITION_SIZE * Float.BYTES;
+    public static final int NORMAL_RELATIVE_OFFSET = TEXTURE_RELATIVE_COORD_OFFSET + TEXTURE_COORD_SIZE * Float.BYTES;
+
+    public static final int SIZE = POSITION_SIZE + TEXTURE_COORD_SIZE + NORMAL_SIZE;
+    public static final int BYTES = SIZE * Float.BYTES;
 
     private Vector3f position;
     private Vector2f textureCoord;

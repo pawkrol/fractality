@@ -30,11 +30,14 @@ public class TestApp {
         ShaderProgram shaderProgram = null;
         try {
             shaderProgram = new ShaderProgram();
+            shaderProgram.addShader(new TestFragmentShader());
+            shaderProgram.addShader(new TestVertexShader());
+            shaderProgram.createAndLink();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        GameObject gameObject = new GameObject(scene, shaderProgram);
+        GameObject gameObject = new GameObject(scene, null, shaderProgram);
 
         scene.getScenegraph().setRoot(new Transform());
         scene.getScenegraph().getRoot().addChildren(gameObject);

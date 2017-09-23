@@ -4,7 +4,7 @@ import engine.utils.Console;
 
 class Engine {
 
-    private static final long MS_PER_UPDATE = 10000L;
+    private static final long MS_PER_UPDATE = 10L;
 
     private Window window;
     private RenderManager renderManager;
