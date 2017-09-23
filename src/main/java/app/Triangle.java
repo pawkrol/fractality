@@ -1,20 +1,48 @@
 package app;
 
+import engine.event.Event;
+import engine.event.EventBus;
+import engine.event.EventObserver;
 import engine.model.Mesh;
 import engine.model.Model;
 import engine.model.Vertex;
 import engine.scene.GameObject;
 import engine.scene.Scene;
-import engine.scene.shader.ShaderProgram;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
 
-public class Triangle extends GameObject{
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_B;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_G;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_R;
 
-    public Triangle(Scene scene, ShaderProgram shaderProgram) {
-        super(scene, null, shaderProgram);
+public class Triangle extends GameObject implements EventObserver{
 
+    private Vector3f color;
+
+    public Triangle(Scene scene) {
+        super(scene, null, null);
+        EventBus.getInstance().attach(this);
+
+        init();
+    }
+
+    @Override
+    public void update() {
+        getShaderProgram().setColor(color);
+    }
+
+    private void init() {
+        Model model = new Model();
+        model.setMesh( createMesh() );
+        setModel(model);
+
+        setShaderProgram( createShaderProgram() );
+
+        color = new Vector3f(1, 1, 1);
+    }
+
+    private Mesh createMesh() {
         ArrayList<Vertex> vertices = new ArrayList<>();
         vertices.add(new Vertex(new Vector3f(0.25f, -0.25f, 0.5f)));
         vertices.add(new Vertex(new Vector3f(-0.25f, -0.25f, 0.5f)));
@@ -25,9 +53,36 @@ public class Triangle extends GameObject{
         indices.add(1);
         indices.add(2);
 
-        Mesh mesh = new Mesh(vertices, indices);
-        Model model = new Model();
-        model.setMesh(mesh);
-        setModel(model);
+        return new Mesh(vertices, indices);
+    }
+
+    private TestShaderProgram createShaderProgram() {
+        TestShaderProgram testShaderProgram = new TestShaderProgram();
+        try {
+            testShaderProgram.createAndLink();
+            testShaderProgram.createUniforms();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return testShaderProgram;
+    }
+
+    @Override
+    public TestShaderProgram getShaderProgram() {
+        return (TestShaderProgram) super.getShaderProgram();
+    }
+
+    @Override
+    public void receiveEvent(int event, Object... params) {
+        if (event == Event.KEY_RELEASED) {
+            if ( (int) params[0] == GLFW_KEY_R ) {
+                color = new Vector3f(1, 0, 0);
+            } else if ( (int) params[0] == GLFW_KEY_G ) {
+                color = new Vector3f(0, 1, 0);
+            } else if ( (int) params[0] == GLFW_KEY_B ) {
+                color = new Vector3f(0, 0, 1);
+            }
+        }
     }
 }

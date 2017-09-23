@@ -57,6 +57,10 @@ public class Window {
         glfwPollEvents();
     }
 
+    public void setTitle(String title) {
+        glfwSetWindowTitle(handle, title);
+    }
+
     private void init() throws RuntimeException {
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -85,7 +89,7 @@ public class Window {
         glfwSetWindowPos(handle, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2);
 
         glfwMakeContextCurrent(handle);
-        glfwSwapInterval(0);
+        glfwSwapInterval(1);
 
         glfwShowWindow(handle);
 

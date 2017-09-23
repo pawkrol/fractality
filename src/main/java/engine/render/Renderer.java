@@ -6,11 +6,17 @@ import engine.scene.shader.ShaderProgram;
 
 public class Renderer {
 
+    private FrameConfig frameConfig;
     private RenderConfig renderConfig;
     private ShaderProgram activeShaderProgram;
 
-    public Renderer(RenderConfig renderConfig) {
+    public Renderer(FrameConfig frameConfig, RenderConfig renderConfig) {
+        this.frameConfig = frameConfig;
         this.renderConfig = renderConfig;
+    }
+
+    public void initFrame() {
+        frameConfig.initFrame();
     }
 
     public void render(Transform transform, GameObject gameObject) {

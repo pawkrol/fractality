@@ -26,6 +26,7 @@ class RenderManager {
     }
 
     void render() {
+        renderer.initFrame();
         renderScenegraph(
                 null,
                 scene.getScenegraph().getRoot()

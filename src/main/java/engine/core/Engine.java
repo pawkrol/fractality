@@ -4,7 +4,7 @@ import engine.utils.Console;
 
 class Engine {
 
-    private static final long MS_PER_UPDATE = 10L;
+    private static final long MS_PER_UPDATE = 16L; //gives a bit more than 60FPS
 
     private Window window;
     private RenderManager renderManager;
@@ -13,22 +13,22 @@ class Engine {
         renderManager = new RenderManager();
     }
 
-    public void createWindow(int width, int height, String title, boolean resizable) {
+    void createWindow(int width, int height, String title, boolean resizable) {
         window = new Window(width, height, title, resizable, 0);
         window.create();
     }
 
-    public void closeWindow() {
+    void closeWindow() {
         window.close();
     }
 
-    public void run() {
+    void run() {
         init();
         loop();
         close();
     }
 
-    public RenderManager getRenderManager() {
+    RenderManager getRenderManager() {
         return renderManager;
     }
 
@@ -42,6 +42,8 @@ class Engine {
         boolean render;
         long prevTime = System.currentTimeMillis();
         long lag = 0;
+        long frameTimeBuffer = 0;
+        int frames = 0;
 
         while (!window.shouldClose()) {
             render = false;
@@ -49,14 +51,22 @@ class Engine {
             long elapsedTime = currentTime - prevTime;
             prevTime = currentTime;
             lag += elapsedTime;
+            frameTimeBuffer += elapsedTime;
 
             while (lag >= MS_PER_UPDATE) {
                 render = true;
                 renderManager.update();
                 lag -= MS_PER_UPDATE;
+
+                if (frameTimeBuffer >= 1000L) {
+                    window.setTitle("fractality FPS: " + frames);
+                    frames = 0;
+                    frameTimeBuffer = 0;
+                }
             }
 
             if (render) {
+                frames++;
                 renderManager.render();
             } else {
                 sync();

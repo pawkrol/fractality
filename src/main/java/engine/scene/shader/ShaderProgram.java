@@ -1,11 +1,18 @@
 package engine.scene.shader;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+import org.lwjgl.system.MemoryStack;
+
+import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.system.MemoryStack.stackPush;
 
 public class ShaderProgram {
 
@@ -13,7 +20,7 @@ public class ShaderProgram {
     private HashMap<String, Integer> uniforms;
     private List<Shader> shaders;
 
-    public ShaderProgram() throws Exception {
+    public ShaderProgram() {
         uniforms = new HashMap<>();
         shaders = new LinkedList<>();
     }
@@ -53,5 +60,44 @@ public class ShaderProgram {
 
     public int getId() {
         return id;
+    }
+
+    protected void createUniform(String uniformName) throws Exception {
+        int uniformLocation = glGetUniformLocation(id, uniformName);
+        if (uniformLocation < 0) {
+            throw new Exception("Could not create uniform: " + uniformName + ", code = " + uniformLocation);
+        }
+
+        uniforms.put(uniformName, uniformLocation);
+    }
+
+    protected void setUniform(String uniformName, Vector3f vector){
+        int location = uniforms.get(uniformName);
+        glUniform3f(location, vector.x, vector.y, vector.z);
+    }
+
+    protected void setUniform(String uniformName, Vector4f vector){
+        int location = uniforms.get(uniformName);
+        glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
+    }
+
+    protected void setUniform(String uniformName, float value){
+        int location = uniforms.get(uniformName);
+        glUniform1f(location, value);
+    }
+
+    protected void setUniform(String uniformName, int value){
+        int location = uniforms.get(uniformName);
+        glUniform1i(location, value);
+    }
+
+    protected void setUniform(String uniformName, Matrix4f matrix){
+        try (MemoryStack stack = stackPush()) {
+            FloatBuffer matrixBuffer = stack.mallocFloat(16);
+            matrix.get(matrixBuffer);
+
+            int location = uniforms.get(uniformName);
+            glUniformMatrix4fv(location, false, matrixBuffer);
+        }
     }
 }
