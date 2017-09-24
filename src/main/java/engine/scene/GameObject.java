@@ -3,7 +3,7 @@ package engine.scene;
 import engine.model.Model;
 import engine.scene.shader.ShaderProgram;
 
-public class GameObject extends Node {
+public abstract class GameObject extends Node {
 
     private Scene scene;
     private ShaderProgram shaderProgram;
@@ -11,6 +11,10 @@ public class GameObject extends Node {
 
     public GameObject(Scene scene) {
         this(scene, null, null);
+    }
+
+    public GameObject(Scene scene, ShaderProgram shaderProgram) {
+        this(scene, null, shaderProgram);
     }
 
     public GameObject(Scene scene, Model model, ShaderProgram shaderProgram) {
@@ -41,7 +45,7 @@ public class GameObject extends Node {
         return shaderProgram;
     }
 
-    public void setShaderProgram(ShaderProgram shaderProgram) {
+    protected void setShaderProgram(ShaderProgram shaderProgram) {
         this.shaderProgram = shaderProgram;
     }
 }

@@ -1,5 +1,6 @@
 package engine.scene;
 
+import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -25,12 +26,15 @@ public class Transform extends Node {
         this.scale = new Vector3f(transform.scale);
     }
 
-    public void update() {
-
+    public Matrix4f getTransformationMatrix() {
+        return new Matrix4f()
+                .translate(translation)
+                .rotate(rotation)
+                .scale(scale);
     }
 
     public void apply(Transform transform) {
-        rotation.add(transform.rotation);
+        transform.rotation.mul(rotation, rotation);
         translation.add(transform.translation);
         scale.set(transform.scale);
     }

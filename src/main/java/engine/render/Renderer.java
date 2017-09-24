@@ -23,6 +23,10 @@ public class Renderer {
         renderConfig.enable();
 
         bindShaderProgram(gameObject.getShaderProgram());
+        gameObject.getShaderProgram()
+                .updateModelMatrix(
+                        transform.getTransformationMatrix()
+                );
         gameObject.getModel()
                 .getMesh()
                 .draw();

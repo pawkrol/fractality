@@ -20,8 +20,8 @@ public class Triangle extends GameObject implements EventObserver{
 
     private Vector3f color;
 
-    public Triangle(Scene scene) {
-        super(scene);
+    public Triangle(Scene scene, TestShaderProgram testShaderProgram) {
+        super(scene, testShaderProgram);
         EventBus.getInstance().attach(this);
 
         init();
@@ -37,16 +37,14 @@ public class Triangle extends GameObject implements EventObserver{
         model.setMesh( createMesh() );
         setModel(model);
 
-        setShaderProgram( createShaderProgram() );
-
         color = new Vector3f(1, 1, 1);
     }
 
     private Mesh createMesh() {
         ArrayList<Vertex> vertices = new ArrayList<>();
-        vertices.add(new Vertex(new Vector3f(0.25f, -0.25f, 0.5f)));
-        vertices.add(new Vertex(new Vector3f(-0.25f, -0.25f, 0.5f)));
-        vertices.add(new Vertex(new Vector3f(0.25f,  0.25f, 0.5f)));
+        vertices.add(new Vertex(new Vector3f(0.25f, -0.25f, -1.05f)));
+        vertices.add(new Vertex(new Vector3f(-0.25f, -0.25f, -1.05f)));
+        vertices.add(new Vertex(new Vector3f(0.25f,  0.25f, -1.05f)));
 
         ArrayList<Integer> indices = new ArrayList<>();
         indices.add(0);
@@ -54,18 +52,6 @@ public class Triangle extends GameObject implements EventObserver{
         indices.add(2);
 
         return new Mesh(vertices, indices);
-    }
-
-    private TestShaderProgram createShaderProgram() {
-        TestShaderProgram testShaderProgram = new TestShaderProgram();
-        try {
-            testShaderProgram.createAndLink();
-            testShaderProgram.createUniforms();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return testShaderProgram;
     }
 
     @Override

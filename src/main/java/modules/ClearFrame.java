@@ -1,4 +1,4 @@
-package app;
+package modules;
 
 import engine.render.FrameConfig;
 

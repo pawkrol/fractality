@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
-public class ShaderProgram {
+public abstract class ShaderProgram {
 
     private int id;
     private HashMap<String, Integer> uniforms;
@@ -25,9 +25,9 @@ public class ShaderProgram {
         shaders = new LinkedList<>();
     }
 
-    public void addShader(Shader shader) {
-        shaders.add(shader);
-    }
+    public abstract void updateModelMatrix(Matrix4f modelMatrix);
+
+    public abstract void create();
 
     public void bind() {
         glUseProgram(id);
@@ -37,7 +37,15 @@ public class ShaderProgram {
         glUseProgram(0);
     }
 
-    public void createAndLink() throws Exception {
+    public int getId() {
+        return id;
+    }
+
+    protected void addShader(Shader shader) {
+        shaders.add(shader);
+    }
+
+    protected void createAndLink() throws Exception {
         id = glCreateProgram();
         if (id == GL_FALSE) {
             throw new Exception("Failed to create shader program");
@@ -56,10 +64,6 @@ public class ShaderProgram {
         for (Shader shader: shaders) {
             shader.clear();
         }
-    }
-
-    public int getId() {
-        return id;
     }
 
     protected void createUniform(String uniformName) throws Exception {

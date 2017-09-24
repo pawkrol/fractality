@@ -30,7 +30,7 @@ To render basic scene:
     scene.getScenegraph().getRoot().addChildren(gameObject);
     ```
     
-5. Don't forget to set your renderer and scene to the game object like so:
+5. Don't forget to add your renderer and scene to the Game object like so:
     ```java
     game.setScene(scene);
     game.setRenderer(renderer);

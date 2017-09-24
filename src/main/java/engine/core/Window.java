@@ -14,9 +14,10 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
 
+    public int width;
+    public int height;
+
     private long handle;
-    private int width;
-    private int height;
     private int aaLevel;
     private boolean resizable;
     private String title;
