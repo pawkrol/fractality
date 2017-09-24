@@ -21,7 +21,7 @@ public class Triangle extends GameObject implements EventObserver{
     private Vector3f color;
 
     public Triangle(Scene scene) {
-        super(scene, null, null);
+        super(scene);
         EventBus.getInstance().attach(this);
 
         init();

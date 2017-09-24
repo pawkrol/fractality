@@ -9,6 +9,10 @@ public class GameObject extends Node {
     private ShaderProgram shaderProgram;
     private Model model;
 
+    public GameObject(Scene scene) {
+        this(scene, null, null);
+    }
+
     public GameObject(Scene scene, Model model, ShaderProgram shaderProgram) {
         this.type = Type.OBJECT;
 

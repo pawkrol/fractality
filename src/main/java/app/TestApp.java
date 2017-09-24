@@ -13,9 +13,9 @@ public class TestApp {
         Game game = new Game();
         game.createWindow(1200, 800, "fractality", false);
 
-        Scene scene = new Scene();
         Renderer renderer = new Renderer(new ClearFrame(), new DefaultRenderConfig());
 
+        Scene scene = new Scene();
         Transform transform = new Transform();
         GameObject gameObject = new Triangle(scene);
 
