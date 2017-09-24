@@ -32,7 +32,8 @@ public class TestShaderProgram extends ShaderProgram {
     }
 
     @Override
-    public void updateModelMatrix(Matrix4f modelMatrix) {
+    public void updateModelAndViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix) {
+        setUniform("viewMatrix", viewMatrix);
         setUniform("modelMatrix", modelMatrix);
     }
 
@@ -42,6 +43,7 @@ public class TestShaderProgram extends ShaderProgram {
 
     public void createUniforms() throws Exception {
         createUniform("projectionMatrix");
+        createUniform("viewMatrix");
         createUniform("modelMatrix");
         createUniform("color");
     }

@@ -22,11 +22,11 @@ class RenderManager {
     }
 
     void update() {
+        renderer.update();
         updateScenegraph(scene.getScenegraph().getRoot());
     }
 
     void render() {
-        renderer.initFrame();
         renderScenegraph(
                 null,
                 scene.getScenegraph().getRoot()

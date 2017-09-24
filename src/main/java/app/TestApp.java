@@ -1,6 +1,7 @@
 package app;
 
 import engine.core.Game;
+import engine.render.Camera;
 import modules.EmptyRenderConfig;
 import engine.render.Renderer;
 import engine.scene.GameObject;
@@ -14,7 +15,7 @@ public class TestApp {
         Game game = new Game();
         game.createWindow(1200, 800, "fractality", false);
 
-        Renderer renderer = new Renderer(new ClearFrame(), new EmptyRenderConfig());
+        Renderer renderer = new Renderer(new Camera(), new ClearFrame(), new EmptyRenderConfig());
 
         TestShaderProgram testShaderProgram = new TestShaderProgram(1200, 800);
         testShaderProgram.create();

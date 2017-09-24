@@ -25,7 +25,7 @@ public abstract class ShaderProgram {
         shaders = new LinkedList<>();
     }
 
-    public abstract void updateModelMatrix(Matrix4f modelMatrix);
+    public abstract void updateModelAndViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix);
 
     public abstract void create();
 

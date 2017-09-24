@@ -6,27 +6,31 @@ import engine.scene.shader.ShaderProgram;
 
 public class Renderer {
 
+    private Camera camera;
     private FrameConfig frameConfig;
     private RenderConfig renderConfig;
     private ShaderProgram activeShaderProgram;
 
-    public Renderer(FrameConfig frameConfig, RenderConfig renderConfig) {
+    public Renderer(Camera camera, FrameConfig frameConfig, RenderConfig renderConfig) {
+        this.camera = camera;
         this.frameConfig = frameConfig;
         this.renderConfig = renderConfig;
     }
 
-    public void initFrame() {
+    public void update() {
         frameConfig.initFrame();
+        camera.update();
     }
 
     public void render(Transform transform, GameObject gameObject) {
         renderConfig.enable();
 
-        bindShaderProgram(gameObject.getShaderProgram());
-        gameObject.getShaderProgram()
-                .updateModelMatrix(
-                        transform.getTransformationMatrix()
-                );
+        ShaderProgram shaderProgram = gameObject.getShaderProgram();
+        bindShaderProgram(shaderProgram);
+        shaderProgram.updateModelAndViewMatrix(
+                transform.getTransformationMatrix(),
+                camera.getViewMatrix()
+        );
         gameObject.getModel()
                 .getMesh()
                 .draw();

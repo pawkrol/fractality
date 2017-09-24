@@ -14,7 +14,7 @@ class Engine {
     }
 
     void createWindow(int width, int height, String title, boolean resizable) {
-        window = new Window(width, height, title, resizable, 0);
+        window = new Window(width, height, title, resizable, 4);
         window.create();
     }
 

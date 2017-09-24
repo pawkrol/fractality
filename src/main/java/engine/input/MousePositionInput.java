@@ -14,7 +14,7 @@ public class MousePositionInput implements GLFWCursorPosCallbackI{
 
     @Override
     public void invoke(long window, double xpos, double ypos) {
-        eventBus.propagate(Event.CURSOR_MOVED, xpos, ypos);
+        eventBus.propagate(Event.CURSOR_MOVED, (float) xpos, (float) ypos);
     }
 
     public static MousePositionInput getInstance() {
