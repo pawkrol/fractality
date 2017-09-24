@@ -13,11 +13,16 @@ public class TestShaderProgram extends ShaderProgram {
     private int windowWidth;
     private int windowHeight;
 
+    private Matrix4f projectionMatrix;
+    private Matrix4f pvmMatrix;
+
     public TestShaderProgram(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         addShader( new Shader("test_fragment_shader.frag", GL_FRAGMENT_SHADER) );
         addShader( new Shader("test_vertex_shader.vert", GL_VERTEX_SHADER) );
+
+        pvmMatrix = new Matrix4f();
     }
 
     @Override
@@ -33,8 +38,10 @@ public class TestShaderProgram extends ShaderProgram {
 
     @Override
     public void updateModelAndViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix) {
-        setUniform("viewMatrix", viewMatrix);
-        setUniform("modelMatrix", modelMatrix);
+        setUniform(
+                "pvmMatrix",
+                pvmMatrix.set(projectionMatrix).mul(viewMatrix).mul(modelMatrix)
+        );
     }
 
     public void setColor(Vector3f color) {
@@ -42,9 +49,7 @@ public class TestShaderProgram extends ShaderProgram {
     }
 
     public void createUniforms() throws Exception {
-        createUniform("projectionMatrix");
-        createUniform("viewMatrix");
-        createUniform("modelMatrix");
+        createUniform("pvmMatrix");
         createUniform("color");
     }
 
@@ -53,10 +58,7 @@ public class TestShaderProgram extends ShaderProgram {
         float fov = (float) Math.toRadians(50.f);
         float nearPlane = .01f;
         float farPlane = 100.f;
-        Matrix4f projectionMatrix = new Matrix4f()
+        projectionMatrix = new Matrix4f()
                 .perspective(fov, aspectRatio, nearPlane, farPlane);
-        bind();
-        setUniform("projectionMatrix", projectionMatrix);
-        unbind();
     }
 }
