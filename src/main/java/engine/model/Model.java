@@ -13,6 +13,10 @@ public class Model {
         this.mesh = mesh;
     }
 
+    public boolean hasMaterial() {
+        return material != null;
+    }
+
     public Material getMaterial() {
         return material;
     }

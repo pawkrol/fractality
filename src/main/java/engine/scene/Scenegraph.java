@@ -8,7 +8,8 @@ public class Scenegraph {
         return root;
     }
 
-    public void setRoot(Node root) {
+    public Node setRoot(Node root) {
         this.root = root;
+        return root;
     }
 }

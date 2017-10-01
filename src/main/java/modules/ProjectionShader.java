@@ -1,14 +1,9 @@
-package app;
+package modules;
 
-import engine.scene.shader.Shader;
 import engine.scene.shader.ShaderProgram;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
-
-public class TestShaderProgram extends ShaderProgram {
+public abstract class ProjectionShader extends ShaderProgram {
 
     private int windowWidth;
     private int windowHeight;
@@ -16,12 +11,11 @@ public class TestShaderProgram extends ShaderProgram {
     private Matrix4f projectionMatrix;
     private Matrix4f pvmMatrix;
 
-    public TestShaderProgram(int windowWidth, int windowHeight) {
+    private ProjectionShader() {}
+
+    public ProjectionShader(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
-        addShader( new Shader("test_fragment_shader.frag", GL_FRAGMENT_SHADER) );
-        addShader( new Shader("test_vertex_shader.vert", GL_VERTEX_SHADER) );
-
         pvmMatrix = new Matrix4f();
     }
 
@@ -44,13 +38,8 @@ public class TestShaderProgram extends ShaderProgram {
         );
     }
 
-    public void setColor(Vector3f color) {
-        setUniform("color", color);
-    }
-
     public void createUniforms() throws Exception {
         createUniform("pvmMatrix");
-        createUniform("color");
     }
 
     private void createProjectionMatrix() {
@@ -61,4 +50,5 @@ public class TestShaderProgram extends ShaderProgram {
         projectionMatrix = new Matrix4f()
                 .perspective(fov, aspectRatio, nearPlane, farPlane);
     }
+
 }

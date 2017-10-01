@@ -44,7 +44,7 @@ public class VAO {
 
         glVertexArrayAttribBinding(id, 1, 0);
         glVertexArrayAttribFormat(id, 1, Vertex.TEXTURE_COORD_SIZE, GL_FLOAT,
-                false, Vertex.TEXTURE_RELATIVE_COORD_OFFSET);
+                false, Vertex.TEXTURE_COORD_RELATIVE_OFFSET);
         glEnableVertexArrayAttrib(id, 1);
 
         glVertexArrayAttribBinding(id, 2, 0);

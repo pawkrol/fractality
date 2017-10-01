@@ -10,6 +10,8 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -95,6 +97,7 @@ public class Window {
         glfwShowWindow(handle);
 
         GL.createCapabilities();
+        glEnable(GL_DEPTH_TEST);
     }
 
 }

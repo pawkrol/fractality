@@ -1,8 +1,8 @@
 package modules;
 
-import engine.render.RenderConfig;
+import engine.render.DrawCallConfig;
 
-public class EmptyRenderConfig implements RenderConfig {
+public class DefaultDrawCallConfig implements DrawCallConfig {
     @Override
     public void enable() {}
 

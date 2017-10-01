@@ -12,4 +12,11 @@ public class Material {
         this.texture = texture;
     }
 
+    public void bind() {
+        texture.bind();
+    }
+
+    public void unbind() {
+        texture.unbind();
+    }
 }

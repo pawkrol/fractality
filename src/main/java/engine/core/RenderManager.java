@@ -19,6 +19,8 @@ class RenderManager {
         if (renderer == null) {
             throw new NullPointerException("Renderer not set");
         }
+
+        renderer.init();
     }
 
     void update() {

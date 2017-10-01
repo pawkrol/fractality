@@ -15,7 +15,6 @@ import static org.lwjgl.stb.STBImage.*;
 public class Image {
 
     public enum Type{
-        TYPE_GREY(1),
         TYPE_NOALPHA(3),
         TYPE_ALPHA(4);
 
@@ -70,14 +69,6 @@ public class Image {
 
     public void clean(){
         stbi_image_free(image);
-    }
-
-    public static void save(BufferedImage image, String name){
-        try {
-            ImageIO.write(image, "PNG", new File("output/screens/" + name));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void load(String source, Type type) throws RuntimeException{

@@ -1,13 +1,14 @@
-package app;
+package app.test;
 
-import engine.model.Mesh;
-import engine.model.Model;
-import engine.model.Vertex;
+import engine.model.*;
 import engine.scene.GameObject;
 import engine.scene.Scene;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
+
+import static engine.common.Image.Type.TYPE_ALPHA;
 
 public class Cube extends GameObject {
 
@@ -24,23 +25,36 @@ public class Cube extends GameObject {
     private void init() {
         Model model = new Model();
         model.setMesh( createMesh() );
+        model.setMaterial( createMaterial() );
         setModel(model);
-
-        getShaderProgram().bind();
-        getShaderProgram().setColor(new Vector3f(1, 1, 0));
-        getShaderProgram().unbind();
     }
 
     private Mesh createMesh() {
         ArrayList<Vertex> vertices = new ArrayList<>();
-        vertices.add(new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f)));
-        vertices.add(new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f)));
-        vertices.add(new Vertex(new Vector3f(0.5f, -0.5f,  0.5f)));
-        vertices.add(new Vertex(new Vector3f(0.5f,  0.5f,  0.5f)));
-        vertices.add(new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f)));
-        vertices.add(new Vertex(new Vector3f(0.5f,  0.5f, -0.5f)));
-        vertices.add(new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f)));
-        vertices.add(new Vertex(new Vector3f(0.5f, -0.5f, -0.5f)));
+        vertices.add(
+                new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f), new Vector2f(0, 0))
+        );
+        vertices.add(
+                new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f), new Vector2f(0, 1))
+        );
+        vertices.add(
+                new Vertex(new Vector3f(0.5f, -0.5f,  0.5f), new Vector2f(1, 1))
+        );
+        vertices.add(
+                new Vertex(new Vector3f(0.5f,  0.5f,  0.5f), new Vector2f(1, 0))
+        );
+        vertices.add(
+                new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f), new Vector2f(0, 0))
+        );
+        vertices.add(
+                new Vertex(new Vector3f(0.5f,  0.5f, -0.5f), new Vector2f(0, 1))
+        );
+        vertices.add(
+                new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(1, 1))
+        );
+        vertices.add(
+                new Vertex(new Vector3f(0.5f, -0.5f, -0.5f), new Vector2f(1, 0))
+        );
 
         ArrayList<Integer> indices = new ArrayList<>();
         indices.add(0);
@@ -81,6 +95,13 @@ public class Cube extends GameObject {
         indices.add(5);
 
         return new Mesh(vertices, indices);
+    }
+
+    private Material createMaterial() {
+        Material material = new Material();
+        material.setTexture(TextureLoader.load("textures/wood.png", TYPE_ALPHA));
+
+        return material;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package engine.render;
 
+import engine.model.Model;
 import engine.scene.GameObject;
 import engine.scene.Transform;
 import engine.scene.shader.ShaderProgram;
@@ -7,14 +8,22 @@ import engine.scene.shader.ShaderProgram;
 public class Renderer {
 
     private Camera camera;
-    private FrameConfig frameConfig;
-    private RenderConfig renderConfig;
     private ShaderProgram activeShaderProgram;
 
-    public Renderer(Camera camera, FrameConfig frameConfig, RenderConfig renderConfig) {
+    private FrameConfig frameConfig;
+    private RenderConfig renderConfig;
+    private DrawCallConfig drawCallConfig;
+
+    private Renderer(Camera camera, RenderConfig renderConfig,
+                     FrameConfig frameConfig, DrawCallConfig drawCallConfig) {
         this.camera = camera;
         this.frameConfig = frameConfig;
         this.renderConfig = renderConfig;
+        this.drawCallConfig = drawCallConfig;
+    }
+
+    public void init() {
+        renderConfig.enable();
     }
 
     public void update() {
@@ -23,19 +32,23 @@ public class Renderer {
     }
 
     public void render(Transform transform, GameObject gameObject) {
-        renderConfig.enable();
+        drawCallConfig.enable();
 
         ShaderProgram shaderProgram = gameObject.getShaderProgram();
+        Model model = gameObject.getModel();
+
         bindShaderProgram(shaderProgram);
         shaderProgram.updateModelAndViewMatrix(
                 transform.getTransformationMatrix(),
                 camera.getViewMatrix()
         );
-        gameObject.getModel()
-                .getMesh()
-                .draw();
 
-        renderConfig.disable();
+        if (model.hasMaterial()) {
+            model.getMaterial().bind();
+        }
+        model.getMesh().draw();
+
+        drawCallConfig.disable();
     }
 
     private void bindShaderProgram(ShaderProgram shaderProgram) {
@@ -43,6 +56,51 @@ public class Renderer {
                 || activeShaderProgram.getId() != shaderProgram.getId()) {
             activeShaderProgram = shaderProgram;
             activeShaderProgram.bind();
+        }
+    }
+
+    public static class RendererBuilder {
+
+        private FrameConfig frameConfig;
+        private RenderConfig renderConfig;
+        private DrawCallConfig drawCallConfig;
+        private Camera camera;
+
+        public RendererBuilder frameConfig(FrameConfig frameConfig) {
+            this.frameConfig = frameConfig;
+            return this;
+        }
+
+        public RendererBuilder renderConfig(RenderConfig renderConfig) {
+            this.renderConfig = renderConfig;
+            return this;
+        }
+
+        public RendererBuilder drawCallConfig(DrawCallConfig drawCallConfig) {
+            this.drawCallConfig = drawCallConfig;
+            return this;
+        }
+
+        public RendererBuilder camera(Camera camera) {
+            this.camera = camera;
+            return this;
+        }
+
+        public Renderer build() {
+            if (camera == null) {
+                throw new NullPointerException("Camera not set");
+            }
+            if (renderConfig == null) {
+                throw new NullPointerException("Render config not set");
+            }
+            if (drawCallConfig == null) {
+                throw new NullPointerException("Draw call config not set");
+            }
+            if (frameConfig == null) {
+                throw new NullPointerException("Frame config not set");
+            }
+
+            return new Renderer(camera, renderConfig, frameConfig, drawCallConfig);
         }
     }
 }

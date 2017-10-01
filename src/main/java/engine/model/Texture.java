@@ -1,6 +1,6 @@
 package engine.model;
 
-import engine.common.Image;
+import static org.lwjgl.opengl.GL45.glBindTextureUnit;
 
 public class Texture {
 
@@ -10,14 +10,15 @@ public class Texture {
         this.id = id;
     }
 
-    public Texture(String source, int id, Image.Type type){
-//        super(source, type);
-
-        this.id = id;
-    }
-
     public int getId() {
         return id;
     }
 
+    public void bind() {
+        glBindTextureUnit(0, id);
+    }
+
+    public void unbind() {
+        glBindTextureUnit(0, 0);
+    }
 }
