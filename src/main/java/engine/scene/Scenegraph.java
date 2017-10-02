@@ -12,4 +12,23 @@ public class Scenegraph {
         this.root = root;
         return root;
     }
+
+    public void clear() {
+        clear(root);
+    }
+
+    private void clear(Node node) {
+        if (node == null) return;
+
+        if (node.getChildren().isEmpty()) {
+            node.setParent(null);
+            return;
+        }
+
+        for (Node child: node.getChildren()) {
+            clear(child);
+            child.clearChildren();
+            child.setParent(null);
+        }
+    }
 }

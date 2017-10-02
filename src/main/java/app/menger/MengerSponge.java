@@ -1,46 +1,56 @@
 package app.menger;
 
-import engine.core.Game;
-import engine.render.Camera;
-import engine.render.Renderer;
 import engine.scene.Scene;
 import engine.scene.Transform;
-import modules.ClearFrame;
-import modules.DefaultDrawCallConfig;
-import modules.EnableCulling;
+import org.joml.Vector3f;
+
+import java.util.ArrayList;
 
 public class MengerSponge {
 
-    private static Game setup() {
-        Game game = new Game();
-        game.createWindow(1200, 800, "Menger Sponge", false);
+    private Box box;
+    private ArrayList<Vector3f> translations;
+    private float currentScale = 1;
 
-        Renderer renderer = new Renderer.RendererBuilder()
-                .drawCallConfig(new DefaultDrawCallConfig())
-                .renderConfig(new EnableCulling())
-                .frameConfig(new ClearFrame())
-                .camera(new Camera())
-                .build();
-        game.setRenderer(renderer);
+    public MengerSponge(Box box) {
+        this.box = box;
+        translations = new ArrayList<>();
 
-        return game;
+        translations.add(new Vector3f());
     }
 
-    public static void main(String[] args) {
-        Game game = setup();
-        MengerShader mengerShader = new MengerShader(1200, 800);
-        mengerShader.create();
+    public void evolve() {
+        currentScale /= 3.f;
 
-        Scene scene = new Scene();
-        Transform boxTransform = new Transform();
-        Box box = new Box(scene, mengerShader);
+        ArrayList<Vector3f> newTranslations = new ArrayList<>();
+        for (Vector3f translation: translations) {
+            for (int x = -1; x < 2; x++) {
+                for (int y = -1; y < 2; y++) {
+                    for (int z = -1; z < 2; z++) {
+                        newTranslations.add(
+                                new Vector3f(translation.x + x * 2 * currentScale,
+                                             translation.y + y * 2 * currentScale,
+                                             translation.z + z * 2 * currentScale)
+                        );
+                    }
+                }
+            }
+        }
+        translations.clear();
+        translations.addAll(newTranslations);
+    }
 
-        scene.getScenegraph()
-                .setRoot(boxTransform)
-                .addChildren(box);
+    public void addSelfToScene(Scene scene) {
+        for (Vector3f translation: translations) {
+            Transform transform = new Transform();
+            transform.getScale().mul(currentScale);
+            transform.getTranslation().set(translation);
 
-        game.setScene(scene);
-        game.start();
+            scene.getScenegraph()
+                    .getRoot()
+                    .addChildren(transform)
+                    .addChildren(box);
+        }
     }
 
 }
