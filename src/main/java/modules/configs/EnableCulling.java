@@ -1,4 +1,4 @@
-package modules;
+package modules.configs;
 
 import engine.render.RenderConfig;
 

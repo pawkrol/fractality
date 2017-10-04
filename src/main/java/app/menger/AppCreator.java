@@ -8,9 +8,9 @@ import engine.render.Camera;
 import engine.render.Renderer;
 import engine.scene.Scene;
 import engine.scene.Transform;
-import modules.ClearFrame;
-import modules.DefaultDrawCallConfig;
-import modules.EnableBlending;
+import modules.configs.ClearFrame;
+import modules.configs.DefaultDrawCallConfig;
+import modules.configs.EnableBlending;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_C;
 

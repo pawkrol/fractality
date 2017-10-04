@@ -27,11 +27,14 @@ public class MengerSponge {
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
                     for (int z = -1; z < 2; z++) {
-                        newTranslations.add(
-                                new Vector3f(translation.x + x * 2 * currentScale,
-                                             translation.y + y * 2 * currentScale,
-                                             translation.z + z * 2 * currentScale)
-                        );
+                        int sum = Math.abs(x) + Math.abs(y) + Math.abs(z);
+                        if (sum > 1) {
+                            newTranslations.add(
+                                    new Vector3f(translation.x + x * 2 * currentScale,
+                                            translation.y + y * 2 * currentScale,
+                                            translation.z + z * 2 * currentScale)
+                            );
+                        }
                     }
                 }
             }

@@ -2,13 +2,13 @@ package app.test;
 
 import engine.core.Game;
 import engine.render.Camera;
-import modules.DefaultDrawCallConfig;
+import modules.configs.DefaultDrawCallConfig;
 import engine.render.Renderer;
 import engine.scene.GameObject;
 import engine.scene.Scene;
 import engine.scene.Transform;
-import modules.ClearFrame;
-import modules.EnableCulling;
+import modules.configs.ClearFrame;
+import modules.configs.EnableCulling;
 
 public class TestApp {
 

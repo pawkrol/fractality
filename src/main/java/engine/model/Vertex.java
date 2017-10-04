@@ -24,6 +24,10 @@ public class Vertex {
         this(position, new Vector2f(0, 0), new Vector3f(0, 0, 0));
     }
 
+    public Vertex(Vector3f position, Vector3f normal) {
+        this(position, new Vector2f(0, 0), normal);
+    }
+
     public Vertex(Vector3f position, Vector2f textureCoord) {
         this(position, textureCoord, new Vector3f(0, 0, 0));
     }
