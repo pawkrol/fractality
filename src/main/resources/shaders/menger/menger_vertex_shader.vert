@@ -9,5 +9,6 @@ out VS_OUT {
 uniform mat4 pvmMatrix;
 
 void main(void){
+    vs_out.fragPos = normalize(position);
     gl_Position = pvmMatrix * vec4(position, 1.0);
 }

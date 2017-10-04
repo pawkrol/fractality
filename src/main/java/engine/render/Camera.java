@@ -12,7 +12,7 @@ public class Camera implements EventObserver {//FPS like camera
 
     private final float mouseSensitivity = 0.001f;
     private final float keySensitivity = 0.05f;
-    private final float pitchLimit = 1.5f;
+    private final float pitchLimit = 1.f;
 
     private Vector2f previousPosition;
     private Vector2f deltaPosition;
@@ -104,10 +104,17 @@ public class Camera implements EventObserver {//FPS like camera
         );
         previousPosition.set(x, y);
 
-        if (pitch < pitchLimit || pitch > -pitchLimit) {
-            pitch += mouseSensitivity * deltaPosition.y;
-        }
+
+        pitch += mouseSensitivity * deltaPosition.y;
         yaw += mouseSensitivity * deltaPosition.x;
+
+        if (pitch > pitchLimit) {
+            pitch = pitchLimit;
+        }
+
+        if (pitch < -pitchLimit) {
+            pitch = -pitchLimit;
+        }
 
         front.x = (float) (Math.cos(pitch) * Math.sin(yaw));
         front.y = (float) (Math.sin(pitch));

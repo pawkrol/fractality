@@ -42,6 +42,7 @@ public class AppCreator implements EventObserver {
         Box box = new Box(scene, mengerShader);
 
         Transform boxTransform = new Transform();
+
         scene.getScenegraph().setRoot(boxTransform);
 
         mengerSponge = new MengerSponge(box);
