@@ -76,10 +76,15 @@ class OBJHelper {
         int vti = indexGroup.getVti();
         int vni = indexGroup.getVni();
 
-        Vector3f vn = this.normals.get(vni);
-        Vector2f vt = this.texCoords.get(vti);
-        vertices.get(vi).setNormal(vn);
-        vertices.get(vi).setTextureCoord(vt);//TODO: detect more than one tex coord at a vertex
+        if (!normals.isEmpty()) {
+            Vector3f vn = normals.get(vni);
+            vertices.get(vi).setNormal(vn);
+        }
+
+        if (!texCoords.isEmpty()) {
+            Vector2f vt = texCoords.get(vti);
+            vertices.get(vi).setTextureCoord(vt);//TODO: detect more than one tex coord at a vertex
+        }
 
         indices.add(vi);
     }
