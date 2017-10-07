@@ -3,6 +3,7 @@ package app.menger;
 import engine.model.*;
 import engine.scene.GameObject;
 import engine.scene.Scene;
+import modules.loaders.obj.OBJLoader;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -73,7 +74,8 @@ public class Box extends GameObject {
         indices.add(4);
         indices.add(5);
 
-        return new Mesh(vertices, indices);
+//        return new Mesh(vertices, indices);
+        return OBJLoader.load("objects/box.obj");
     }
 
 }
