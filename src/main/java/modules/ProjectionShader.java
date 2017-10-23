@@ -9,14 +9,14 @@ public abstract class ProjectionShader extends ShaderProgram {
     private int windowHeight;
 
     private Matrix4f projectionMatrix;
-    private Matrix4f pvmMatrix;
+    private Matrix4f vmMatrix;
 
     private ProjectionShader() {}
 
     public ProjectionShader(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
-        pvmMatrix = new Matrix4f();
+        vmMatrix = new Matrix4f();
     }
 
     @Override
@@ -33,13 +33,14 @@ public abstract class ProjectionShader extends ShaderProgram {
     @Override
     public void updateModelAndViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix) {
         setUniform(
-                "pvmMatrix",
-                pvmMatrix.set(projectionMatrix).mul(viewMatrix).mul(modelMatrix)
+                "vmMatrix",
+                vmMatrix.set(viewMatrix).mul(modelMatrix)
         );
     }
 
     public void createUniforms() throws Exception {
-        createUniform("pvmMatrix");
+        createUniform("pMatrix");
+        createUniform("vmMatrix");
     }
 
     private void createProjectionMatrix() {
@@ -49,6 +50,13 @@ public abstract class ProjectionShader extends ShaderProgram {
         float farPlane = 100.f;
         projectionMatrix = new Matrix4f()
                 .perspective(fov, aspectRatio, nearPlane, farPlane);
+
+        bind();
+        setUniform(
+                "pMatrix",
+                projectionMatrix
+        );
+        unbind();
     }
 
 }

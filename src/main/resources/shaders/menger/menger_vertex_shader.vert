@@ -1,14 +1,20 @@
 #version 450 core
 
 layout(location = 0) in vec3 position;
+layout(location = 2) in vec3 normal;
 
 out VS_OUT {
     vec3 fragPos;
+    vec3 fragNorm;
 } vs_out;
 
-uniform mat4 pvmMatrix;
+uniform mat4 vmMatrix;
+uniform mat4 pMatrix;
 
 void main(void){
-    vs_out.fragPos = normalize(position);
-    gl_Position = pvmMatrix * vec4(position, 1.0);
+    vec4 vmPos = vmMatrix * vec4(position, 1);
+    gl_Position = pMatrix * vmPos;
+
+    vs_out.fragNorm = normalize(vmMatrix * vec4(normal, 0)).xyz;
+    vs_out.fragPos = vmPos.xyz;
 }

@@ -11,6 +11,7 @@ import engine.scene.Transform;
 import modules.configs.ClearFrame;
 import modules.configs.DefaultDrawCallConfig;
 import modules.configs.EnableBlending;
+import modules.configs.EnableCulling;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_C;
 
@@ -27,7 +28,7 @@ public class AppCreator implements EventObserver {
 
         Renderer renderer = new Renderer.RendererBuilder()
                 .drawCallConfig(new DefaultDrawCallConfig())
-                .renderConfig(new EnableBlending())
+                .renderConfig(new EnableCulling())
                 .frameConfig(new ClearFrame())
                 .camera(new Camera())
                 .build();
@@ -58,10 +59,6 @@ public class AppCreator implements EventObserver {
             resetScene();
             mengerSponge.evolve();
             mengerSponge.addSelfToScene(game.getScene());
-        }
-
-        if (event == Event.KEY_RELEASED && (int) params[0] == GLFW_KEY_C) {
-            resetScene();
         }
     }
 
