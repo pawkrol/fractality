@@ -74,8 +74,19 @@ public class Box extends GameObject {
         indices.add(4);
         indices.add(5);
 
+        ArrayList<Vector3f> offsets = new ArrayList<>();
+        offsets.add(new Vector3f(0, 0, 0));
+        offsets.add(new Vector3f(0, 2, 0));
+        offsets.add(new Vector3f(0, 4, 0));
+
+
 //        return new Mesh(vertices, indices);
-        return OBJLoader.load("objects/box.obj");
+        Mesh mesh = OBJLoader.load("objects/box.obj");
+        mesh.setInstanced(true);
+        mesh.setInstances(3);
+        mesh.setInstanceData(offsets);
+
+        return mesh;
     }
 
 }

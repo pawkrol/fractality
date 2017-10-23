@@ -46,8 +46,8 @@ public abstract class ProjectionShader extends ShaderProgram {
     private void createProjectionMatrix() {
         float aspectRatio = (float) windowWidth / (float) windowHeight;
         float fov = (float) Math.toRadians(50.f);
-        float nearPlane = .01f;
-        float farPlane = 100.f;
+        float nearPlane = .1f;
+        float farPlane = 1000.f;
         projectionMatrix = new Matrix4f()
                 .perspective(fov, aspectRatio, nearPlane, farPlane);
 
