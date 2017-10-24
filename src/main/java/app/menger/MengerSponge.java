@@ -20,7 +20,7 @@ public class MengerSponge {
     }
 
     public void evolve() {
-        currentScale /= 3.f;
+        currentScale /= 2.f;
 
         ArrayList<Vector3f> newTranslations = new ArrayList<>();
         for (Vector3f translation: translations) {
@@ -30,9 +30,9 @@ public class MengerSponge {
                         int sum = Math.abs(x) + Math.abs(y) + Math.abs(z);
                         if (sum > 1) {
                             newTranslations.add(
-                                    new Vector3f(translation.x + x * 2 * currentScale,
-                                            translation.y + y * 2 * currentScale,
-                                            translation.z + z * 2 * currentScale)
+                                    new Vector3f((translation.x + x) * 3,
+                                            (translation.y + y) * 3,
+                                            (translation.z + z) * 3)
                             );
                         }
                     }
@@ -41,19 +41,15 @@ public class MengerSponge {
         }
         translations.clear();
         translations.addAll(newTranslations);
+
+        System.out.println(newTranslations.size() * 12);
+        box.getMesh().setInstances(newTranslations.size());
+        box.getMesh().setInstanceData(newTranslations);
     }
 
     public void addSelfToScene(Scene scene) {
-        for (Vector3f translation: translations) {
-            Transform transform = new Transform();
-            transform.getScale().mul(currentScale);
-            transform.getTranslation().set(translation);
-
-            scene.getScenegraph()
-                    .getRoot()
-                    .addChildren(transform)
-                    .addChildren(box);
-        }
+        ( (Transform) scene.getScenegraph().getRoot())
+                .getScale().set(new Vector3f(currentScale, currentScale, currentScale));
     }
 
 }

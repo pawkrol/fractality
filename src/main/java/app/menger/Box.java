@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class Box extends GameObject {
 
+    private Mesh mesh;
+
     public Box(Scene scene, MengerShader mengerShader) {
         super(scene, mengerShader);
         init();
@@ -21,72 +23,28 @@ public class Box extends GameObject {
 
     private void init() {
         Model model = new Model();
-        model.setMesh( createMesh() );
+        mesh = createMesh();
+        model.setMesh(mesh);
         setModel(model);
     }
 
     private Mesh createMesh() {
-        ArrayList<Vertex> vertices = new ArrayList<>();
-        vertices.add(new Vertex(new Vector3f(-1f,  1f,  1f)));
-        vertices.add(new Vertex(new Vector3f(-1f, -1f,  1f)));
-        vertices.add(new Vertex(new Vector3f(1f, -1f,  1f)));
-        vertices.add(new Vertex(new Vector3f(1f,  1f,  1f)));
-        vertices.add(new Vertex(new Vector3f(-1f,  1f, -1f)));
-        vertices.add(new Vertex(new Vector3f(1f,  1f, -1f)));
-        vertices.add(new Vertex(new Vector3f(-1f, -1f, -1f)));
-        vertices.add(new Vertex(new Vector3f(1f, -1f, -1f)));
-
-        ArrayList<Integer> indices = new ArrayList<>();
-        indices.add(0);
-        indices.add(1);
-        indices.add(3);
-        indices.add(3);
-        indices.add(1);
-        indices.add(2);
-        indices.add(4);
-        indices.add(0);
-        indices.add(3);
-        indices.add(5);
-        indices.add(4);
-        indices.add(3);
-        indices.add(3);
-        indices.add(2);
-        indices.add(7);
-        indices.add(5);
-        indices.add(3);
-        indices.add(7);
-        indices.add(6);
-        indices.add(1);
-        indices.add(0);
-        indices.add(6);
-        indices.add(0);
-        indices.add(4);
-        indices.add(2);
-        indices.add(1);
-        indices.add(6);
-        indices.add(2);
-        indices.add(6);
-        indices.add(7);
-        indices.add(7);
-        indices.add(6);
-        indices.add(4);
-        indices.add(7);
-        indices.add(4);
-        indices.add(5);
-
         ArrayList<Vector3f> offsets = new ArrayList<>();
         offsets.add(new Vector3f(0, 0, 0));
-        offsets.add(new Vector3f(0, 2, 0));
-        offsets.add(new Vector3f(0, 4, 0));
 
-
-//        return new Mesh(vertices, indices);
         Mesh mesh = OBJLoader.load("objects/box.obj");
         mesh.setInstanced(true);
-        mesh.setInstances(3);
+        mesh.setInstances(1);
         mesh.setInstanceData(offsets);
 
         return mesh;
     }
 
+    public Mesh getMesh() {
+        return mesh;
+    }
+
+    public void setMesh(Mesh mesh) {
+        this.mesh = mesh;
+    }
 }
