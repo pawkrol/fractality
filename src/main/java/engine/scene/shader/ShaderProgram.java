@@ -69,7 +69,7 @@ public abstract class ShaderProgram {
     protected void createUniform(String uniformName) throws Exception {
         int uniformLocation = glGetUniformLocation(id, uniformName);
         if (uniformLocation < 0) {
-            throw new Exception("Could not create uniform: " + uniformName + ", code = " + uniformLocation);
+//            throw new Exception("Could not create uniform: " + uniformName + ", code = " + uniformLocation);
         }
 
         uniforms.put(uniformName, uniformLocation);

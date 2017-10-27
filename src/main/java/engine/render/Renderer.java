@@ -2,8 +2,8 @@ package engine.render;
 
 import engine.model.Model;
 import engine.scene.GameObject;
-import engine.scene.Transform;
 import engine.scene.shader.ShaderProgram;
+import org.joml.Matrix4f;
 
 public class Renderer {
 
@@ -31,7 +31,7 @@ public class Renderer {
         camera.update();
     }
 
-    public void render(Transform transform, GameObject gameObject) {
+    public void render(Matrix4f transformationMatrix, GameObject gameObject) {
         drawCallConfig.enable();
 
         ShaderProgram shaderProgram = gameObject.getShaderProgram();
@@ -39,7 +39,7 @@ public class Renderer {
 
         bindShaderProgram(shaderProgram);
         shaderProgram.updateModelAndViewMatrix(
-                transform.getTransformationMatrix(),
+                transformationMatrix,
                 camera.getViewMatrix()
         );
 

@@ -8,6 +8,6 @@ public class ClearFrame implements FrameConfig {
     @Override
     public void initFrame() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(.12f, .12f, .12f, 0.f);
+        glClearColor(.93f, .93f, .93f, 0.f);
     }
 }

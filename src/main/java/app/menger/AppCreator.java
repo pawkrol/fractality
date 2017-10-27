@@ -10,16 +10,13 @@ import engine.scene.Scene;
 import engine.scene.Transform;
 import modules.configs.ClearFrame;
 import modules.configs.DefaultDrawCallConfig;
-import modules.configs.EnableBlending;
 import modules.configs.EnableCulling;
 import org.lwjgl.system.Configuration;
-
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_C;
 
 public class AppCreator implements EventObserver {
 
     private Game game;
-    private MengerSponge mengerSponge;
+    private LeeuwenbergTree leeuwenbergTree;
 
     public void setup() {
         Configuration.STACK_SIZE.set(2048);
@@ -38,20 +35,13 @@ public class AppCreator implements EventObserver {
     }
 
     public void start() {
-        MengerShader mengerShader = new MengerShader(1200, 800);
-        mengerShader.create();
-
         Scene scene = new Scene();
-        Box box = new Box(scene, mengerShader);
-
-        Transform boxTransform = new Transform();
-//        boxTransform.getScale().div(2f);
+        Transform baseTransform = new Transform();
 
         scene.getScenegraph()
-                .setRoot(boxTransform)
-                .addChildren(box);
+                .setRoot(baseTransform);
 
-        mengerSponge = new MengerSponge(box);
+        leeuwenbergTree = new LeeuwenbergTree(scene);
 
         game.setScene(scene);
         game.start();
@@ -60,20 +50,7 @@ public class AppCreator implements EventObserver {
     @Override
     public void receiveEvent(int event, Object... params) {
         if (event == Event.MOUSE_BUTTON_RELEASED) {
-            mengerSponge.evolve();
-            mengerSponge.addSelfToScene(game.getScene());
+            leeuwenbergTree.evolve();
         }
-    }
-
-    private void resetScene() {
-        game.getScene()
-                .getScenegraph()
-                .clear();
-
-        Transform boxTransform = new Transform();
-
-        game.getScene()
-                .getScenegraph()
-                .setRoot(boxTransform);
     }
 }

@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 
 public class MengerShader extends ProjectionShader {
 
-    private Vector3f lightPosition = new Vector3f(0f, 2.f, -2.f);
+    private Vector3f lightPosition = new Vector3f(0f, 1.f, 2f);
 
     public MengerShader(int windowWidth, int windowHeight) {
         super(windowWidth, windowHeight);

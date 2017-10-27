@@ -26,23 +26,11 @@ public class Transform extends Node {
         this.scale = new Vector3f(transform.scale);
     }
 
-    public Matrix4f getTransformationMatrix() {
-        return new Matrix4f()
+    public void applyOn(Matrix4f transformationMatrix) {
+        transformationMatrix
                 .translate(translation)
                 .rotate(rotation)
                 .scale(scale);
-    }
-
-    public void apply(Transform transform) {
-        transform.rotation.mul(rotation, rotation);
-        translation.add(transform.translation);
-        scale.set(transform.scale);
-    }
-
-    public void set(Transform transform) {
-        rotation.set(transform.rotation);
-        translation.set(transform.translation);
-        scale.set(transform.scale);
     }
 
     public Quaternionf getRotation() {

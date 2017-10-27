@@ -84,11 +84,6 @@ public class VAO {
                 false, Vertex.NORMAL_RELATIVE_OFFSET);
         glEnableVertexArrayAttrib(id, NORMAL_INDEX);
 
-        glVertexArrayAttribBinding(id, INSTANCE_INDEX, 1);
-        glVertexArrayAttribFormat(id, INSTANCE_INDEX, 3, GL_FLOAT, false, 0);
-        glVertexArrayBindingDivisor(id, 1, 1);
-        glEnableVertexArrayAttrib(id, INSTANCE_INDEX);
-
         try (MemoryStack stack = stackPush()) {
             FloatBuffer floatBuffer = stack.mallocFloat(Vertex.SIZE * vertices.size());
             vertices.forEach(v -> floatBuffer.put(v.getAsFloatArray()));
@@ -112,6 +107,13 @@ public class VAO {
 
     public void setInstanced(boolean instanced) {
         this.instanced = instanced;
+
+        if (instanced) {
+            glVertexArrayAttribBinding(id, INSTANCE_INDEX, 1);
+            glVertexArrayAttribFormat(id, INSTANCE_INDEX, 3, GL_FLOAT, false, 0);
+            glVertexArrayBindingDivisor(id, 1, 1);
+            glEnableVertexArrayAttrib(id, INSTANCE_INDEX);
+        }
     }
 
     public int getInstances() {

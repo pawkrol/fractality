@@ -5,11 +5,16 @@ import engine.scene.GameObject;
 import engine.scene.Node;
 import engine.scene.Scene;
 import engine.scene.Transform;
+import org.joml.Matrix4f;
+
+import java.util.Stack;
 
 class RenderManager {
 
     private Scene scene;
     private Renderer renderer;
+    private Stack<Matrix4f> matrixStack;
+    private Matrix4f transformationMatrix;
 
     void init() {
         if (scene == null) {
@@ -20,19 +25,20 @@ class RenderManager {
             throw new NullPointerException("Renderer not set");
         }
 
+        matrixStack = new Stack<>();
+        transformationMatrix = new Matrix4f();
+
         renderer.init();
     }
 
     void update() {
+        resetMatrix();
         renderer.update();
         updateScenegraph(scene.getScenegraph().getRoot());
     }
 
     void render() {
-        renderScenegraph(
-                null,
-                scene.getScenegraph().getRoot()
-        );
+        renderScenegraph(scene.getScenegraph().getRoot());
     }
 
     Scene getScene() {
@@ -60,21 +66,35 @@ class RenderManager {
         }
     }
 
-    private void renderScenegraph(Transform currentTransform, Node node) { //pre order traversal
+    private void renderScenegraph(Node node) { //pre order traversal
         if (node == null) return;
 
+        pushMatrix();
+
         if (node.getType() == Node.Type.TRANSFORMATION) {
-            if (currentTransform == null) {
-                currentTransform = new Transform((Transform) node);
-            } else {
-                currentTransform.apply((Transform) node);
-            }
+            ( (Transform) node ).applyOn(transformationMatrix);
         } else if (node.getType() == Node.Type.OBJECT) {
-            renderer.render(currentTransform, (GameObject) node);
+            renderer.render(transformationMatrix, (GameObject) node);
         }
 
         for (Node child: node.getChildren()) {
-            renderScenegraph(new Transform(currentTransform), child);
+            renderScenegraph(child);
         }
+
+        popMatrix();
+    }
+
+    private void resetMatrix() {
+        transformationMatrix.identity();
+    }
+
+    private void pushMatrix() {
+        matrixStack.push(transformationMatrix);
+    }
+
+    private void popMatrix() {
+        transformationMatrix
+                .identity()
+                .set( matrixStack.pop() );
     }
 }

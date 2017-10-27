@@ -11,10 +11,10 @@ uniform vec3 lightPos;
 
 void main(void){
     vec3 lightColor = vec3(1);
-    vec3 cubeColor = vec3(0, 0.8, 0.6);
+    vec3 cubeColor = vec3(0.9, 0.9, 0.9);
 
     //ambient
-    float ambientFactor = .2;
+    float ambientFactor = .8;
     vec3 ambientColor = lightColor * ambientFactor;
 
     //diffuse
