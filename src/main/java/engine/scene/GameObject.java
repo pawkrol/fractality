@@ -25,6 +25,8 @@ public abstract class GameObject extends Node {
         this.shaderProgram = shaderProgram;
     }
 
+    public void updateUniforms() {}
+
     public Scene getScene() {
         return scene;
     }

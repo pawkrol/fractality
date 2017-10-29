@@ -6,54 +6,52 @@ import org.joml.Vector3f;
 
 public class Transform extends Node {
 
+    private Matrix4f localMatrix;
+
     private Quaternionf rotation;
     private Vector3f translation;
     private Vector3f scale;
 
+    private boolean dirty;
+
     public Transform() {
         this.type = Type.TRANSFORMATION;
+
+        this.localMatrix = new Matrix4f();
 
         this.rotation = new Quaternionf();
         this.translation = new Vector3f();
         this.scale = new Vector3f(1, 1, 1);
-    }
 
-    public Transform(Transform transform) {
-        this.type = Type.TRANSFORMATION;
-
-        this.rotation = new Quaternionf(transform.rotation);
-        this.translation = new Vector3f(transform.translation);
-        this.scale = new Vector3f(transform.scale);
+        this.dirty = true;
     }
 
     public void applyOn(Matrix4f transformationMatrix) {
-        transformationMatrix
-                .translate(translation)
-                .rotate(rotation)
-                .scale(scale);
+        if (dirty) {
+            localMatrix
+                    .identity()
+                    .translate(translation)
+                    .rotate(rotation)
+                    .scale(scale);
+
+            dirty = false;
+        }
+
+        transformationMatrix.mul(localMatrix);
     }
 
     public Quaternionf getRotation() {
+        dirty = true;
         return rotation;
     }
 
-    public void setRotation(Quaternionf rotation) {
-        this.rotation = rotation;
-    }
-
     public Vector3f getTranslation() {
+        dirty = true;
         return translation;
     }
 
-    public void setTranslation(Vector3f translation) {
-        this.translation = translation;
-    }
-
     public Vector3f getScale() {
+        dirty = true;
         return scale;
-    }
-
-    public void setScale(Vector3f scale) {
-        this.scale = scale;
     }
 }

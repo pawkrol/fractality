@@ -12,7 +12,7 @@ public class Camera implements EventObserver {//FPS like camera
 
     private final float mouseSensitivity = 0.001f;
     private final float keySensitivity = 0.05f;
-    private final float pitchLimit = 1.f;
+    private final float pitchLimit = 1.5f;
 
     private Vector2f previousPosition;
     private Vector2f deltaPosition;

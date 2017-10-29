@@ -42,6 +42,7 @@ public class Renderer {
                 transformationMatrix,
                 camera.getViewMatrix()
         );
+        gameObject.updateUniforms();
 
         if (model.hasMaterial()) {
             model.getMaterial().bind();

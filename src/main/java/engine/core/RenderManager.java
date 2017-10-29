@@ -1,10 +1,7 @@
 package engine.core;
 
 import engine.render.Renderer;
-import engine.scene.GameObject;
-import engine.scene.Node;
-import engine.scene.Scene;
-import engine.scene.Transform;
+import engine.scene.*;
 import org.joml.Matrix4f;
 
 import java.util.Stack;
@@ -32,12 +29,12 @@ class RenderManager {
     }
 
     void update() {
-        resetMatrix();
         renderer.update();
         updateScenegraph(scene.getScenegraph().getRoot());
     }
 
     void render() {
+        resetMatrix();
         renderScenegraph(scene.getScenegraph().getRoot());
     }
 
@@ -89,12 +86,10 @@ class RenderManager {
     }
 
     private void pushMatrix() {
-        matrixStack.push(transformationMatrix);
+        matrixStack.push(new Matrix4f(transformationMatrix));
     }
 
     private void popMatrix() {
-        transformationMatrix
-                .identity()
-                .set( matrixStack.pop() );
+        transformationMatrix = matrixStack.pop();
     }
 }

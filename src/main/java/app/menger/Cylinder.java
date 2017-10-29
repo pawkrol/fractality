@@ -18,8 +18,14 @@ public class Cylinder extends GameObject{
     private ArrayList<Vertex> vertices = new ArrayList<>();
     private ArrayList<Integer> indices = new ArrayList<>();
 
+    private MengerShader mengerShader;
+    private Vector3f color;
+
     public Cylinder(Scene scene, MengerShader mengerShader) {
         super(scene, mengerShader);
+
+        this.mengerShader = mengerShader;
+        this.color = new Vector3f(.26f, .15f, .07f);
     }
 
     public void generate(float topR, float bottomR, float height) {
@@ -33,6 +39,10 @@ public class Cylinder extends GameObject{
         Model model = new Model();
         model.setMesh( generateCylinder() );
         setModel(model);
+    }
+
+    public void updateUniforms() {
+        mengerShader.setColor(color);
     }
 
     private Mesh generateCylinder() {

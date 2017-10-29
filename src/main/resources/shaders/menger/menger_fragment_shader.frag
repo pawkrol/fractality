@@ -8,10 +8,10 @@ in VS_OUT {
 } vs_in;
 
 uniform vec3 lightPos;
+uniform vec3 color;
 
 void main(void){
     vec3 lightColor = vec3(1);
-    vec3 cubeColor = vec3(0.9, 0.9, 0.9);
 
     //ambient
     float ambientFactor = .8;
@@ -23,5 +23,5 @@ void main(void){
     float diffuseFactor = max( dot(vs_in.fragNorm, toLight), 0 );
     vec3 diffuseColor = diffuseFactor * lightColor;
 
-    outColor = vec4(cubeColor * (ambientColor + diffuseColor), 1);
+    outColor = vec4(color * (ambientColor + diffuseColor), 1);
 }

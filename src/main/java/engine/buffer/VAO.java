@@ -40,7 +40,7 @@ public class VAO {
         glBindVertexArray(id);
 
         if (instanced) {
-            glDrawElementsInstanced(GL_TRIANGLES,  vertexCount, GL_UNSIGNED_INT, 0, instances);
+            glDrawElementsInstanced(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0, instances);
         } else {
             glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0);
         }

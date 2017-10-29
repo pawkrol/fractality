@@ -11,7 +11,6 @@ import engine.scene.Transform;
 import modules.configs.ClearFrame;
 import modules.configs.DefaultDrawCallConfig;
 import modules.configs.EnableCulling;
-import org.lwjgl.system.Configuration;
 
 public class AppCreator implements EventObserver {
 
@@ -19,7 +18,6 @@ public class AppCreator implements EventObserver {
     private LeeuwenbergTree leeuwenbergTree;
 
     public void setup() {
-        Configuration.STACK_SIZE.set(2048);
         EventBus.getInstance().attach(this);
 
         game = new Game();
@@ -35,13 +33,17 @@ public class AppCreator implements EventObserver {
     }
 
     public void start() {
+        MengerShader  mengerShader = new MengerShader(1200, 800);
+        mengerShader.create();
+
         Scene scene = new Scene();
         Transform baseTransform = new Transform();
 
         scene.getScenegraph()
-                .setRoot(baseTransform);
+                .setRoot(baseTransform)
+                .addChildren(new Plane(scene, mengerShader));
 
-        leeuwenbergTree = new LeeuwenbergTree(scene);
+        leeuwenbergTree = new LeeuwenbergTree(scene, mengerShader);
 
         game.setScene(scene);
         game.start();
@@ -49,8 +51,5 @@ public class AppCreator implements EventObserver {
 
     @Override
     public void receiveEvent(int event, Object... params) {
-        if (event == Event.MOUSE_BUTTON_RELEASED) {
-            leeuwenbergTree.evolve();
-        }
     }
 }

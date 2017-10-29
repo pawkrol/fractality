@@ -69,7 +69,7 @@ class Engine {
                 frames++;
                 renderManager.render();
             } else {
-                sync();
+//                sync();
             }
 
             window.update();
