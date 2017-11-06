@@ -10,8 +10,6 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -64,6 +62,12 @@ public class Window {
         glfwSetWindowTitle(handle, title);
     }
 
+    public void makeContextCurrent() {
+        glfwMakeContextCurrent(handle);
+        GL.createCapabilities();
+        glfwSwapInterval(0);
+    }
+
     private void init() throws RuntimeException {
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -96,13 +100,9 @@ public class Window {
         GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         glfwSetWindowPos(handle, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2);
 
-        glfwMakeContextCurrent(handle);
-        glfwSwapInterval(0);
-
         glfwShowWindow(handle);
 
-        GL.createCapabilities();
-        glEnable(GL_DEPTH_TEST);
+        makeContextCurrent();
     }
 
 }
