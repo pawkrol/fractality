@@ -15,6 +15,7 @@ public class Scenegraph {
 
     public void clear() {
         clear(root);
+        root = null;
     }
 
     private void clear(Node node) {
