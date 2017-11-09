@@ -1,7 +1,7 @@
 package engine.buffer;
 
 import engine.model.Vertex;
-import org.joml.Vector3f;
+import org.joml.Matrix4f;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.FloatBuffer;
@@ -9,6 +9,7 @@ import java.nio.IntBuffer;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL14.glMultiDrawElements;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL31.glDrawElementsInstanced;
 import static org.lwjgl.opengl.GL45.*;
@@ -48,20 +49,20 @@ public class VAO {
         glBindVertexArray(0);
     }
 
-    public void setInstanceData(List<Vector3f> data) throws Exception {
+    public void setInstanceData(List<Matrix4f> data) throws Exception {
         if (id == 0) throw new Exception("Buffer not created");
 
         try (MemoryStack stack = stackPush()){
-            FloatBuffer floatBuffer = stack.mallocFloat(3 * data.size());
+            FloatBuffer floatBuffer = stack.mallocFloat(4 * 4 * data.size());
             data.forEach(v -> {
-                floatBuffer.put(v.x);
-                floatBuffer.put(v.y);
-                floatBuffer.put(v.z);
+                v.get(floatBuffer);
+                int pos = floatBuffer.position();
+                floatBuffer.position(pos + 4 * 4);
             });
             floatBuffer.flip();
 
             int dataVBO = new VBO(floatBuffer).getId();
-            glVertexArrayVertexBuffer(id, 1, dataVBO, 0, 3 * Float.BYTES);
+            glVertexArrayVertexBuffer(id, 1, dataVBO, 0, 4 * 4 * Float.BYTES);
         }
 
     }
@@ -110,7 +111,7 @@ public class VAO {
 
         if (instanced) {
             glVertexArrayAttribBinding(id, INSTANCE_INDEX, 1);
-            glVertexArrayAttribFormat(id, INSTANCE_INDEX, 3, GL_FLOAT, false, 0);
+            glVertexArrayAttribFormat(id, INSTANCE_INDEX, 4 * 4, GL_FLOAT, false, 0);
             glVertexArrayBindingDivisor(id, 1, 1);
             glEnableVertexArrayAttrib(id, INSTANCE_INDEX);
         }

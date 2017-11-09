@@ -1,7 +1,7 @@
 package engine.model;
 
 import engine.buffer.VAO;
-import org.joml.Vector3f;
+import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Mesh {
         vao.setInstances(instances);
     }
 
-    public void setInstanceData(List<Vector3f> data) {
+    public void setInstanceData(List<Matrix4f> data) {
         try {
             vao.setInstanceData(data);
         } catch (Exception e) {

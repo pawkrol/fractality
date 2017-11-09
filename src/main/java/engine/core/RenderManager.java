@@ -30,12 +30,11 @@ class RenderManager {
 
     void update() {
         renderer.update();
-        updateScenegraph(scene.getScenegraph().getRoot());
     }
 
     void render() {
         resetMatrix();
-        renderScenegraph(scene.getScenegraph().getRoot());
+        traverseSceneGraph(scene.getScenegraph().getRoot());
     }
 
     Scene getScene() {
@@ -54,20 +53,12 @@ class RenderManager {
         this.renderer = renderer;
     }
 
-    private void updateScenegraph(Node node) {
-        if (node == null) return;
-
-        node.update();
-        for (Node child: node.getChildren()) {
-            updateScenegraph(child);
-        }
-    }
-
-    private void renderScenegraph(Node node) { //pre order traversal
+    private void traverseSceneGraph(Node node) { //pre order traversal
         if (node == null) return;
 
         pushMatrix();
 
+        node.update();
         if (node.getType() == Node.Type.TRANSFORMATION) {
             ( (Transform) node ).applyOn(transformationMatrix);
         } else if (node.getType() == Node.Type.OBJECT) {
@@ -75,7 +66,7 @@ class RenderManager {
         }
 
         for (Node child: node.getChildren()) {
-            renderScenegraph(child);
+            traverseSceneGraph(child);
         }
 
         popMatrix();

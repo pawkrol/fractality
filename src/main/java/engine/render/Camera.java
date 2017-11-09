@@ -90,11 +90,13 @@ public class Camera implements EventObserver {//FPS like camera
     }
 
     public Matrix4f getViewMatrix() {
-        return viewMatrix.identity().lookAt(
-                position,
-                direction.set(position.x + front.x, position.y + front.y, position.z + front.z),
-                up
-        );
+        return viewMatrix
+                .identity()
+                .lookAt(
+                    position,
+                    direction.set(position.x + front.x, position.y + front.y, position.z + front.z),
+                    up
+                );
     }
 
     private void updateMouse(float x, float y) {
