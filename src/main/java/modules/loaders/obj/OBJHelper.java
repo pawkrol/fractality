@@ -41,7 +41,7 @@ class OBJHelper {
 
     void parseTexCoord(String val1, String val2) {
         float u = Float.parseFloat(val1);
-        float v = Float.parseFloat(val2);
+        float v = 1f - Float.parseFloat(val2);
 
         texCoords.add(new Vector2f(u, v));
     }
