@@ -31,8 +31,9 @@ To render basic scene:
     Transform transform = new Transform();
     GameObject gameObject = new Triangle(scene);
     
-    scene.getScenegraph().setRoot(transform);
-    scene.getScenegraph().getRoot().addChildren(gameObject);
+    scene.getScenegraph()
+         .setRoot(transform)
+         .addChildren(gameObject);
     ```
     
 5. Don't forget to add your renderer and scene to the Game object like so:
