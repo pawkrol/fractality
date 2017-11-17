@@ -101,8 +101,6 @@ public class Window {
         glfwSetWindowPos(handle, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2);
 
         glfwShowWindow(handle);
-
-        makeContextCurrent();
     }
 
 }

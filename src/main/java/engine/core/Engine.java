@@ -23,13 +23,10 @@ class Engine {
     }
 
     void run() {
-        //delegating rendering to the another thread
-        new Thread(() -> {
-            window.makeContextCurrent();
-            init();
-            loop();
-            close();
-        }).run();
+        window.makeContextCurrent();
+        init();
+        loop();
+        close();
     }
 
     RenderManager getRenderManager() {
