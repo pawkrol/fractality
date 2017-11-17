@@ -13,7 +13,12 @@ To render basic scene:
     
 2.  Next, define renderer and its config
     ```java
-    Renderer renderer = new Renderer(new ClearFrame(), new DefaultRenderConfig());
+     Renderer renderer = new Renderer.RendererBuilder()
+                .drawCallConfig(new DefaultDrawCallConfig())
+                .renderConfig(new EnableCulling())
+                .frameConfig(new ClearFrame())
+                .camera(new Camera())
+                .build();
     ```
     
 3. And create your scene
@@ -40,3 +45,5 @@ To render basic scene:
     ```java
     game.start();
     ```
+    
+You can dynamically add or remove your objects from the scene.
