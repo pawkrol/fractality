@@ -16,6 +16,7 @@ class Engine {
     void createWindow(int width, int height, String title, boolean resizable) {
         window = new Window(width, height, title, resizable, 4);
         window.create();
+        window.makeContextCurrent();
     }
 
     void closeWindow() {
@@ -23,7 +24,6 @@ class Engine {
     }
 
     void run() {
-        window.makeContextCurrent();
         init();
         loop();
         close();
