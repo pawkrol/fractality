@@ -1,6 +1,6 @@
 package engine.core;
 
-import engine.utils.Console;
+import engine.core.render.RenderManager;
 
 class Engine {
 

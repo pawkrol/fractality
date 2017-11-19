@@ -1,19 +1,18 @@
-package engine.core;
+package engine.core.render;
 
-import engine.render.Renderer;
 import engine.scene.*;
 import org.joml.Matrix4f;
 
 import java.util.Stack;
 
-class RenderManager {
+public class RenderManager {
 
     private Scene scene;
     private Renderer renderer;
     private Stack<Matrix4f> matrixStack;
     private Matrix4f transformationMatrix;
 
-    void init() {
+    public void init() {
         if (scene == null) {
             throw new NullPointerException("Scene not set");
         }
@@ -28,20 +27,20 @@ class RenderManager {
         renderer.init();
     }
 
-    void update() {
+    public void update() {
         renderer.update();
     }
 
-    void render() {
+    public void render() {
         resetMatrix();
         traverseSceneGraph(scene.getScenegraph().getRoot());
     }
 
-    Scene getScene() {
+    public Scene getScene() {
         return scene;
     }
 
-    void setScene(Scene scene) {
+    public void setScene(Scene scene) {
         this.scene = scene;
     }
 
@@ -60,7 +59,7 @@ class RenderManager {
 
         node.update();
         if (node.getType() == Node.Type.TRANSFORMATION) {
-            ( (Transform) node ).applyOn(transformationMatrix);
+            ( (Transform) node ).getMatrix(transformationMatrix);
         } else if (node.getType() == Node.Type.OBJECT) {
             renderer.render(transformationMatrix, (GameObject) node);
         }

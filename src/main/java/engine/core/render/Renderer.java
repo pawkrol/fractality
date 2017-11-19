@@ -1,4 +1,4 @@
-package engine.render;
+package engine.core.render;
 
 import engine.model.Model;
 import engine.scene.GameObject;
@@ -13,6 +13,8 @@ public class Renderer {
     private FrameConfig frameConfig;
     private RenderConfig renderConfig;
     private DrawCallConfig drawCallConfig;
+
+    private Matrix4f viewMatrix;
 
     private Renderer(Camera camera, RenderConfig renderConfig,
                      FrameConfig frameConfig, DrawCallConfig drawCallConfig) {
@@ -29,6 +31,7 @@ public class Renderer {
     public void update() {
         frameConfig.initFrame();
         camera.update();
+        viewMatrix = camera.getViewMatrix();
     }
 
     public void render(Matrix4f transformationMatrix, GameObject gameObject) {
@@ -40,7 +43,7 @@ public class Renderer {
         bindShaderProgram(shaderProgram);
         shaderProgram.updateModelAndViewMatrix(
                 transformationMatrix,
-                camera.getViewMatrix()
+                viewMatrix
         );
         gameObject.updateUniforms();
 

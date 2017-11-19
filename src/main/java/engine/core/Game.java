@@ -3,7 +3,7 @@ package engine.core;
 import engine.event.Event;
 import engine.event.EventBus;
 import engine.event.EventObserver;
-import engine.render.Renderer;
+import engine.core.render.Renderer;
 import engine.scene.Scene;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;

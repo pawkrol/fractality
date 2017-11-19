@@ -1,6 +1,6 @@
 package modules.configs;
 
-import engine.render.RenderConfig;
+import engine.core.render.RenderConfig;
 
 import static org.lwjgl.opengl.GL11.*;
 

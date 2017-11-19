@@ -1,4 +1,4 @@
-package engine.render;
+package engine.core.render;
 
 @FunctionalInterface
 public interface FrameConfig {

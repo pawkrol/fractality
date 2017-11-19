@@ -26,7 +26,7 @@ public class Transform extends Node {
         this.dirty = true;
     }
 
-    public void applyOn(Matrix4f transformationMatrix) {
+    public void getMatrix(Matrix4f transformationMatrix) {
         if (dirty) {
             localMatrix
                     .identity()

@@ -1,4 +1,4 @@
-package engine.render;
+package engine.core.render;
 
 import engine.event.Event;
 import engine.event.EventBus;

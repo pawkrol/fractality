@@ -1,7 +1,6 @@
 package modules.configs;
 
-import engine.render.FrameConfig;
-import org.joml.Vector3f;
+import engine.core.render.FrameConfig;
 
 import static org.lwjgl.opengl.GL11.*;
 

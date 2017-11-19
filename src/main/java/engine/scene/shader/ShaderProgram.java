@@ -17,6 +17,8 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 public abstract class ShaderProgram {
 
     private int id;
+    private boolean bound = false;
+
     private HashMap<String, Integer> uniforms;
     private List<Shader> shaders;
 
@@ -30,11 +32,21 @@ public abstract class ShaderProgram {
     public abstract void create();
 
     public void bind() {
-        glUseProgram(id);
+        if (!bound) {
+            glUseProgram(id);
+            bound = true;
+        }
     }
 
     public void unbind() {
-        glUseProgram(0);
+        if (bound) {
+            glUseProgram(0);
+            bound = false;
+        }
+    }
+
+    public boolean isBound() {
+        return bound;
     }
 
     public int getId() {

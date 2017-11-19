@@ -1,6 +1,6 @@
 package modules.configs;
 
-import engine.render.DrawCallConfig;
+import engine.core.render.DrawCallConfig;
 
 public class DefaultDrawCallConfig implements DrawCallConfig {
     @Override
