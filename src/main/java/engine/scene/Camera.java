@@ -1,4 +1,4 @@
-package engine.core.render;
+package engine.scene;
 
 import engine.event.Event;
 import engine.event.EventBus;
@@ -54,7 +54,9 @@ public class Camera implements EventObserver {//FPS like camera
     public void receiveEvent(int event, Object... params) {
         if (event == Event.CURSOR_MOVED) {
             updateMouse( (float) params[0], (float) params[1] );
-        } else if (event == Event.KEY_PRESSED) {
+        }
+
+        if (event == Event.KEY_PRESSED) {
             updateKeyboard( Event.KEY_PRESSED, (int) params[0] );
         } else if (event == Event.KEY_RELEASED) {
             updateKeyboard( Event.KEY_RELEASED, (int) params[0] );

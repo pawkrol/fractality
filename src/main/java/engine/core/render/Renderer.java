@@ -1,6 +1,7 @@
 package engine.core.render;
 
 import engine.model.Model;
+import engine.scene.Camera;
 import engine.scene.GameObject;
 import engine.scene.shader.ShaderProgram;
 import org.joml.Matrix4f;
