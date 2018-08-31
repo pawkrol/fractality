@@ -1,15 +1,18 @@
 package engine.core.render;
 
 import engine.scene.*;
+import engine.utils.MatrixStack;
 import org.joml.Matrix4f;
 
 import java.util.Stack;
 
 public class RenderManager {
 
+    private final int INIT_STACK_SIZE = 2;
+
     private Scene scene;
     private Renderer renderer;
-    private Stack<Matrix4f> matrixStack;
+    private MatrixStack matrixStack;
     private Matrix4f transformationMatrix;
 
     public void init() {
@@ -21,7 +24,7 @@ public class RenderManager {
             throw new NullPointerException("Renderer not set");
         }
 
-        matrixStack = new Stack<>();
+        createStack();
         transformationMatrix = new Matrix4f();
 
         renderer.init();
@@ -71,15 +74,19 @@ public class RenderManager {
         popMatrix();
     }
 
+    private void createStack() {
+        matrixStack = new MatrixStack(INIT_STACK_SIZE);
+    }
+
     private void resetMatrix() {
         transformationMatrix.identity();
     }
 
     private void pushMatrix() {
-        matrixStack.push(new Matrix4f(transformationMatrix));
+        matrixStack.push(transformationMatrix);
     }
 
     private void popMatrix() {
-        transformationMatrix = matrixStack.pop();
+        matrixStack.pop(transformationMatrix);
     }
 }
