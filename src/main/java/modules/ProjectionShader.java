@@ -31,7 +31,7 @@ public abstract class ProjectionShader extends ShaderProgram {
     }
 
     @Override
-    public void updateModelAndViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix) {
+    public void updateModelViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix) {
         setUniform(
                 "vmMatrix",
                 vmMatrix.set(viewMatrix).mul(modelMatrix)

@@ -26,7 +26,7 @@ public abstract class ShaderProgram {
         shaders = new LinkedList<>();
     }
 
-    public abstract void updateModelAndViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix);
+    public abstract void updateModelViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix);
 
     public abstract void create();
 
@@ -70,7 +70,7 @@ public abstract class ShaderProgram {
     protected void createUniform(String uniformName) throws Exception {
         int uniformLocation = glGetUniformLocation(id, uniformName);
         if (uniformLocation < 0) {
-//            throw new Exception("Could not create uniform: " + uniformName + ", code = " + uniformLocation);
+            throw new Exception("Could not create uniform: " + uniformName + ", code = " + uniformLocation);
         }
 
         uniforms.put(uniformName, uniformLocation);

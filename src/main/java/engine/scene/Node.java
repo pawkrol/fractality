@@ -1,6 +1,7 @@
 package engine.scene;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Node {
@@ -16,7 +17,7 @@ public abstract class Node {
     private List<Node> children;
 
     protected Node() {
-        children = new ArrayList<>();
+        children = Collections.synchronizedList(new ArrayList<>());
     }
 
     public void update() {}

@@ -1,14 +1,15 @@
-package engine.scene;
+package modules;
 
 import engine.event.Event;
 import engine.event.EventBus;
 import engine.event.EventObserver;
+import engine.scene.EngineCamera;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
-public class Camera implements EventObserver {//FPS like camera
+public class Camera extends EngineCamera implements EventObserver {//FPS like camera
 
     private final float mouseSensitivity = 0.001f;
     private final float keySensitivity = 0.05f;
@@ -21,8 +22,6 @@ public class Camera implements EventObserver {//FPS like camera
     private Vector3f position;
     private Vector3f front;
     private Vector3f up;
-
-    private Matrix4f viewMatrix;
 
     private Vector3f buffMoveVector;
 
@@ -63,6 +62,7 @@ public class Camera implements EventObserver {//FPS like camera
         }
     }
 
+    @Override
     public void update() {
         if (moveFront) {
             position.add(front.x * keySensitivity, front.y * keySensitivity, front.z * keySensitivity);
@@ -91,6 +91,7 @@ public class Camera implements EventObserver {//FPS like camera
         }
     }
 
+    @Override
     public Matrix4f getViewMatrix() {
         return viewMatrix
                 .identity()

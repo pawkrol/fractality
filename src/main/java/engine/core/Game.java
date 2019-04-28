@@ -19,8 +19,8 @@ public class Game implements EventObserver {
         eventBus.attach(this);
     }
 
-    public void createWindow(int width, int height, String title, boolean resizable) {
-        engine.createWindow(width, height, title, resizable);
+    public Window createWindow(int width, int height, String title, boolean resizable) {
+        return engine.createWindow(width, height, title, resizable);
     }
 
     public void start() {

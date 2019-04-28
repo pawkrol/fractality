@@ -1,14 +1,14 @@
 package engine.core.render;
 
 import engine.model.Model;
-import engine.scene.Camera;
+import engine.scene.EngineCamera;
 import engine.scene.GameObject;
 import engine.scene.shader.ShaderProgram;
 import org.joml.Matrix4f;
 
 public class Renderer {
 
-    private Camera camera;
+    private EngineCamera camera;
     private ShaderProgram activeShaderProgram;
 
     private FrameConfig frameConfig;
@@ -17,7 +17,7 @@ public class Renderer {
 
     private Matrix4f viewMatrix;
 
-    private Renderer(Camera camera, RenderConfig renderConfig,
+    private Renderer(EngineCamera camera, RenderConfig renderConfig,
                      FrameConfig frameConfig, DrawCallConfig drawCallConfig) {
         this.camera = camera;
         this.frameConfig = frameConfig;
@@ -42,16 +42,14 @@ public class Renderer {
         Model model = gameObject.getModel();
 
         bindShaderProgram(shaderProgram);
-        shaderProgram.updateModelAndViewMatrix(
+        shaderProgram.updateModelViewMatrix(
                 transformationMatrix,
                 viewMatrix
         );
         gameObject.updateUniforms();
 
-        if (model.hasMaterial()) {
-            model.getMaterial().bind();
-        }
-        model.getMesh().draw();
+        model.bind();
+        model.draw();
 
         drawCallConfig.disable();
     }
@@ -69,7 +67,7 @@ public class Renderer {
         private FrameConfig frameConfig;
         private RenderConfig renderConfig;
         private DrawCallConfig drawCallConfig;
-        private Camera camera;
+        private EngineCamera camera;
 
         public RendererBuilder frameConfig(FrameConfig frameConfig) {
             this.frameConfig = frameConfig;
@@ -86,7 +84,7 @@ public class Renderer {
             return this;
         }
 
-        public RendererBuilder camera(Camera camera) {
+        public RendererBuilder camera(EngineCamera camera) {
             this.camera = camera;
             return this;
         }

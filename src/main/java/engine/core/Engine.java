@@ -13,10 +13,11 @@ class Engine {
         renderManager = new RenderManager();
     }
 
-    void createWindow(int width, int height, String title, boolean resizable) {
+    Window createWindow(int width, int height, String title, boolean resizable) {
         window = new Window(width, height, title, resizable, 4);
         window.create();
         window.makeContextCurrent();
+        return window;
     }
 
     void closeWindow() {

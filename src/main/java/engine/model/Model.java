@@ -1,5 +1,7 @@
 package engine.model;
 
+import java.util.Optional;
+
 public class Model {
 
     private Mesh mesh;
@@ -23,5 +25,14 @@ public class Model {
 
     public void setMaterial(Material material) {
         this.material = material;
+    }
+
+    public void bind() {
+        Optional.ofNullable(material)
+                .ifPresent(Material::bind);
+    }
+
+    public void draw() {
+        mesh.draw();
     }
 }

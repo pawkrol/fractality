@@ -1,10 +1,13 @@
 package engine.core.render;
 
-import engine.scene.*;
+import engine.scene.GameObject;
+import engine.scene.Node;
+import engine.scene.Scene;
+import engine.scene.Transform;
 import engine.utils.MatrixStack;
 import org.joml.Matrix4f;
 
-import java.util.Stack;
+import java.util.List;
 
 public class RenderManager {
 
@@ -61,14 +64,21 @@ public class RenderManager {
         pushMatrix();
 
         node.update();
-        if (node.getType() == Node.Type.TRANSFORMATION) {
-            ( (Transform) node ).getMatrix(transformationMatrix);
-        } else if (node.getType() == Node.Type.OBJECT) {
-            renderer.render(transformationMatrix, (GameObject) node);
+
+        switch (node.getType()) {
+            case OBJECT:
+                renderer.render(transformationMatrix, (GameObject) node);
+                break;
+            case TRANSFORMATION:
+                ((Transform) node).getMatrix(transformationMatrix);
+                break;
         }
 
-        for (Node child: node.getChildren()) {
-            traverseSceneGraph(child);
+        List<Node> children = node.getChildren();
+        synchronized (children) {
+            for (Node child: children) {
+                traverseSceneGraph(child);
+            }
         }
 
         popMatrix();
