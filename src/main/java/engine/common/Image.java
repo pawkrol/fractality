@@ -1,14 +1,15 @@
 package engine.common;
 
 import engine.utils.PathObtainer;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import org.lwjgl.BufferUtils;
 
+import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import static org.lwjgl.stb.STBImage.*;
+import static org.lwjgl.stb.STBImage.stbi_failure_reason;
+import static org.lwjgl.stb.STBImage.stbi_image_free;
+import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class Image {
 
@@ -85,9 +86,9 @@ public class Image {
         this.comp = comp.get(0);
     }
 
-    public static WritableImage encode(ByteBuffer buffer, int width, int height) {
-        WritableImage image = new WritableImage(width, height);
-        PixelWriter pixelWriter = image.getPixelWriter();
+    public static java.awt.image.BufferedImage encode(ByteBuffer buffer, int width, int height) {
+        java.awt.image.BufferedImage image =
+                new java.awt.image.BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
@@ -96,7 +97,7 @@ public class Image {
                 int r = buffer.get(i) & 0xFF;
                 int g = buffer.get(i + 1) & 0xFF;
                 int b = buffer.get(i + 2) & 0xFF;
-                pixelWriter.setArgb(x, (height - (y + 1)), b | g << 8 | r << 16);
+                image.setRGB(x, height - (y + 1), b | g << 8 | r << 16);
             }
         }
 
