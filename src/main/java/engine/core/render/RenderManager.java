@@ -40,6 +40,7 @@ public class RenderManager {
     public void render() {
         resetMatrix();
         traverseSceneGraph(scene.getScenegraph().getRoot());
+        renderer.postRender();
     }
 
     public Scene getScene() {

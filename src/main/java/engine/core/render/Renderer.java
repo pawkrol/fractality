@@ -14,15 +14,17 @@ public class Renderer {
     private FrameConfig frameConfig;
     private RenderConfig renderConfig;
     private DrawCallConfig drawCallConfig;
+    private PostRender postRender;
 
     private Matrix4f viewMatrix;
 
     private Renderer(EngineCamera camera, RenderConfig renderConfig,
-                     FrameConfig frameConfig, DrawCallConfig drawCallConfig) {
+                     FrameConfig frameConfig, DrawCallConfig drawCallConfig, PostRender postRender) {
         this.camera = camera;
         this.frameConfig = frameConfig;
         this.renderConfig = renderConfig;
         this.drawCallConfig = drawCallConfig;
+        this.postRender = postRender;
     }
 
     public void init() {
@@ -54,6 +56,12 @@ public class Renderer {
         drawCallConfig.disable();
     }
 
+    public void postRender() {
+        if (postRender != null) {
+            this.postRender.call();
+        }
+    }
+
     private void bindShaderProgram(ShaderProgram shaderProgram) {
         if (activeShaderProgram == null
                 || activeShaderProgram.getId() != shaderProgram.getId()) {
@@ -67,6 +75,7 @@ public class Renderer {
         private FrameConfig frameConfig;
         private RenderConfig renderConfig;
         private DrawCallConfig drawCallConfig;
+        private PostRender postRender;
         private EngineCamera camera;
 
         public RendererBuilder frameConfig(FrameConfig frameConfig) {
@@ -81,6 +90,11 @@ public class Renderer {
 
         public RendererBuilder drawCallConfig(DrawCallConfig drawCallConfig) {
             this.drawCallConfig = drawCallConfig;
+            return this;
+        }
+
+        public RendererBuilder postRender(PostRender postRender) {
+            this.postRender = postRender;
             return this;
         }
 
@@ -103,7 +117,7 @@ public class Renderer {
                 throw new NullPointerException("Frame config not set");
             }
 
-            return new Renderer(camera, renderConfig, frameConfig, drawCallConfig);
+            return new Renderer(camera, renderConfig, frameConfig, drawCallConfig, postRender);
         }
     }
 }
