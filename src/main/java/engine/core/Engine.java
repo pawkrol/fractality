@@ -2,12 +2,18 @@ package engine.core;
 
 import engine.core.render.RenderManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 class Engine {
 
     private static final long MS_PER_UPDATE = 16L; //gives a bit more than 60FPS
 
     private Window window;
     private RenderManager renderManager;
+
+    private final List<Runnable> tasks = Collections.synchronizedList(new ArrayList<>());
 
     Engine() {
         renderManager = new RenderManager();
@@ -30,6 +36,10 @@ class Engine {
         close();
     }
 
+    void runInGLThread(Runnable runnable) {
+        tasks.add(runnable);
+    }
+
     RenderManager getRenderManager() {
         return renderManager;
     }
@@ -48,6 +58,13 @@ class Engine {
         int frames = 0;
 
         while (!window.shouldClose()) {
+            if (tasks.size() > 0) {
+                synchronized (tasks) {
+                    tasks.forEach(Runnable::run);
+                    tasks.clear();
+                }
+            }
+
             render = false;
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - prevTime;

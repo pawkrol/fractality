@@ -23,6 +23,14 @@ public class Game implements EventObserver {
         return engine.createWindow(width, height, title, resizable);
     }
 
+    /**
+     * Warning: It will lag/slow down rendering (i.e. drop frames)
+     * @param someCode - Code to be run in render thread i.e. loading models from other non rendering thread
+     */
+    public void runInRenderThread(Runnable someCode) {
+        engine.runInGLThread(someCode);
+    }
+
     public void start() {
         engine.run();
     }
